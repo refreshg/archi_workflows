@@ -1,0 +1,24 @@
+# საიდუმლოებები — არასოდეს ატვირთო გიტზე
+.env
+.env.*
+!.env.example
+secrets/
+*.key
+*.pem
+
+# Python / Node
+__pycache__/
+*.pyc
+.venv/
+venv/
+node_modules/
+
+# IDE / OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+
+# ლოკალური output / ლოგები
+output/
+*.log
