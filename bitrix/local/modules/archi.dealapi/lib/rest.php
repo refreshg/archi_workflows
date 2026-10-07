@@ -7,7 +7,7 @@
 // პასუხი (მოიძებნა):
 //   {"result": {"STATUS": "FOUND", "ID": "1277195",
 //               "UF_CRM_1644491469819": "692.03",            // მიმდინარე დავალიანება
-//               "UF_CRM_1617787519405": ["არქი ხეივანი B | ..."], // დეტალური ინფორმაცია
+//               "UF_CRM_1617787519405": ["არქი ხეივანი B | ..."], // დეტალური ინფორმაცია (კვ. ფასი / ჯამური ფასი ამოღებულია)
 //               "PROJECT": "არქი ხეივანი B",
 //               "COMPANY_NAME": "შპს ...",                    // ლისტი 231: შპს დასახელება
 //               "IDENTIFICATION_CODE": "..."}}                // ლისტი 231: საიდენტიფიკაციო კოდი (null თუ არ არის)
@@ -77,6 +77,7 @@ class Rest
 
         $detail = $deal[self::FIELD_DETAIL];
         $detail = is_array($detail) ? array_values($detail) : ($detail !== null && $detail !== '' ? array($detail) : array());
+        $detail = array_map(array(__CLASS__, 'stripPrices'), $detail);
 
         $projects = self::projectNames($deal[self::FIELD_PROJECT]);
         if (!$projects && $detail) {
@@ -101,6 +102,21 @@ class Rest
             'COMPANY_NAME' => $ucc ? $ucc['COMPANY_NAME'] : null,
             'IDENTIFICATION_CODE' => $ucc ? $ucc['CODE'] : null,
         );
+    }
+
+    // "არქი ხეივანი B | პარკინგი | ბინის №: 38 | კვ.მ. | სართ:-1 | კვ. ფასი: $0.00 | ჯამური ფასი: $9,000.00"
+    // → "არქი ხეივანი B | პარკინგი | ბინის №: 38 | კვ.მ. | სართ:-1"
+    private static function stripPrices($line)
+    {
+        $parts = array();
+        foreach (explode('|', (string)$line) as $part) {
+            $part = trim($part);
+            if (mb_strpos($part, 'კვ. ფასი') === 0 || mb_strpos($part, 'ჯამური ფასი') === 0) {
+                continue;
+            }
+            $parts[] = $part;
+        }
+        return implode(' | ', $parts);
     }
 
     private static function projectNames($enumIds)
