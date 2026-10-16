@@ -10,7 +10,10 @@
 //               "UF_CRM_1617787519405": ["არქი ხეივანი B | ..."], // დეტალური ინფორმაცია (კვ. ფასი / ჯამური ფასი ამოღებულია)
 //               "PROJECT": "არქი ხეივანი B",
 //               "COMPANY_NAME": "შპს ...",                    // ლისტი 231: შპს დასახელება
-//               "IDENTIFICATION_CODE": "..."}}                // ლისტი 231: საიდენტიფიკაციო კოდი (null თუ არ არის)
+//               "IDENTIFICATION_CODE": "...",                 // ლისტი 231: საიდენტიფიკაციო კოდი (null თუ არ არის)
+//               "DEBT_GEL": "1798.39",                        // დავალიანება ლარში = დავალიანება (USD) × ეროვნული ბანკის კურსი
+//               "NBG_USD_RATE": 2.5987,                       // გამოყენებული კურსი (1 USD → GEL)
+//               "NBG_RATE_DATE": "2026-10-16"}}               // კურსის თარიღი (დღევანდელი; ბანკი თუ არ პასუხობს — ბოლო ცნობილი)
 // პასუხი (ვერ მოიძებნა):
 //   {"result": {"STATUS": "NOT_FOUND", "ID": "1277195"}}
 //
@@ -93,6 +96,10 @@ class Rest
             }
         }
 
+        $debtUsd = self::amount($deal[self::FIELD_DEBT]);
+        self::ensureAgent();
+        $rate = self::usdRate();
+
         return array(
             'STATUS' => 'FOUND',
             'ID' => (string)$deal['ID'],
@@ -101,7 +108,106 @@ class Rest
             'PROJECT' => $projects ? $projects[0] : null,
             'COMPANY_NAME' => $ucc ? $ucc['COMPANY_NAME'] : null,
             'IDENTIFICATION_CODE' => $ucc ? $ucc['CODE'] : null,
+            'DEBT_GEL' => ($debtUsd !== null && $rate) ? number_format($debtUsd * $rate['RATE'], 2, '.', '') : null,
+            'NBG_USD_RATE' => $rate ? $rate['RATE'] : null,
+            'NBG_RATE_DATE' => $rate ? $rate['DATE'] : null,
         );
+    }
+
+    // "692.03" ან "692.03|USD" → 692.03; ცარიელი → null
+    private static function amount($value)
+    {
+        if (is_array($value)) {
+            $value = reset($value);
+        }
+        $value = trim(explode('|', (string)$value)[0]);
+        if ($value === '' || !is_numeric(str_replace(',', '', $value))) {
+            return null;
+        }
+        return (float)str_replace(',', '', $value);
+    }
+
+    // ---- ეროვნული ბანკის კურსი (USD → GEL) -------------------------------------------------------------------
+
+    const NBG_URL = 'https://nbg.gov.ge/gw/api/ct/monetarypolicy/currencies/ka/json?currencies=USD&date=';
+    const OPTION_LAST_RATE = 'nbg_usd_last';
+
+    const AGENT = '\\Archi\\DealApi\\Rest::warmRateAgent();';
+    const OPTION_AGENT = 'nbg_agent_registered';
+
+    // აგენტი ყოველ 15 წუთში: თუ დღევანდელი კურსი cache-ში ჯერ არ არის, წინასწარ ჩამოიტანს
+    // (სერვერიდან ბანკთან კავშირი ნელია — ასე API-ის გამომძახებელი არ ელოდება)
+    public static function warmRateAgent()
+    {
+        try {
+            self::usdRate();
+        } catch (\Throwable $e) {
+            error_log('[archi.dealapi] warmRateAgent: ' . $e->getMessage());
+        }
+        return self::AGENT;
+    }
+
+    // აგენტს ერთხელ ვარეგისტრირებთ (პირველ გამოძახებაზე), მოდულის ხელახალი ინსტალაციის გარეშე
+    private static function ensureAgent()
+    {
+        try {
+            if (\Bitrix\Main\Config\Option::get('archi.dealapi', self::OPTION_AGENT, '') === 'Y') {
+                return;
+            }
+            $exists = \CAgent::GetList(array(), array('NAME' => self::AGENT, 'MODULE_ID' => 'archi.dealapi'))->Fetch();
+            if (!$exists) {
+                \CAgent::AddAgent(self::AGENT, 'archi.dealapi', 'N', 900);
+            }
+            \Bitrix\Main\Config\Option::set('archi.dealapi', self::OPTION_AGENT, 'Y');
+        } catch (\Throwable $e) {
+            error_log('[archi.dealapi] ensureAgent: ' . $e->getMessage());
+        }
+    }
+
+    // დღევანდელი კურსი (თბილისის დროით). ბანკს ვიძახებთ მხოლოდ მაშინ, როცა ამ დღის კურსი cache-ში არ არის
+    // (თარიღის კურსი არ იცვლება). ბანკი თუ არ პასუხობს — ბოლო წარმატებით მიღებული კურსი თავისი თარიღით.
+    private static function usdRate()
+    {
+        $today = (new \DateTime('now', new \DateTimeZone('Asia/Tbilisi')))->format('Y-m-d');
+        $cache = \Bitrix\Main\Data\Cache::createInstance();
+        if ($cache->initCache(26 * 3600, 'nbg_usd_' . $today, '/archi.dealapi/nbg')) {
+            $cached = $cache->getVars();
+            if (!empty($cached['RATE'])) {
+                return $cached;
+            }
+        }
+        $rate = self::fetchNbg($today);
+        if ($rate) {
+            if ($cache->startDataCache()) {
+                $cache->endDataCache($rate);
+            }
+            \Bitrix\Main\Config\Option::set('archi.dealapi', self::OPTION_LAST_RATE, json_encode($rate));
+            return $rate;
+        }
+        $last = json_decode(\Bitrix\Main\Config\Option::get('archi.dealapi', self::OPTION_LAST_RATE, ''), true);
+        return (is_array($last) && !empty($last['RATE'])) ? $last : null;
+    }
+
+    private static function fetchNbg($date)
+    {
+        try {
+            $http = new \Bitrix\Main\Web\HttpClient(array('socketTimeout' => 5, 'streamTimeout' => 5));
+            $body = $http->get(self::NBG_URL . $date);
+            if ($http->getStatus() !== 200 || !$body) {
+                return null;
+            }
+            $data = json_decode($body, true);
+            foreach ((array)(isset($data[0]['currencies']) ? $data[0]['currencies'] : array()) as $c) {
+                if (isset($c['code'], $c['rate']) && $c['code'] === 'USD' && (float)$c['rate'] > 0) {
+                    $qty = !empty($c['quantity']) ? (float)$c['quantity'] : 1.0;
+                    $validFrom = isset($c['validFromDate']) ? substr($c['validFromDate'], 0, 10) : $date;
+                    return array('RATE' => round((float)$c['rate'] / $qty, 6), 'DATE' => $validFrom);
+                }
+            }
+        } catch (\Throwable $e) {
+            error_log('[archi.dealapi] NBG: ' . $e->getMessage());
+        }
+        return null;
     }
 
     // "არქი ხეივანი B | პარკინგი | ბინის №: 38 | კვ.მ. | სართ:-1 | კვ. ფასი: $0.00 | ჯამური ფასი: $9,000.00"
