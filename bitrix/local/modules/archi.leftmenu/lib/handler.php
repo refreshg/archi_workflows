@@ -7,6 +7,7 @@
 // თუ ბმული უკვე არის მენიუში, მეორედ აღარ ემატება. Uninstall აბრუნებს ყველაფერს.
 //
 // 1.1.0: დამატებით, კონკრეტულ იუზერებს (USER_ITEMS) მენიუს ხილული პუნქტების ბოლოში ემატება ბმული.
+// 1.2.0: USER_ITEMS-ში 16 გამყიდველის კალენდარი CAL_USERS-ისთვის (5544, 5601, 5532).
 
 namespace Archi\LeftMenu;
 
@@ -23,10 +24,30 @@ class Handler
         array('archi_cal_5050', '/company/personal/user/5050/calendar/', 'სოფიკო კობახიძე calendar'),
     );
 
+    // გამყიდველების კალენდრები: მარიამ ყულეჯიშვილი (5544), მარიამ მიქელაძე (5601), სალომე მალასიძე (5532)
+    const CAL_USERS = array(5544, 5601, 5532);
+
     // [მენიუს ელემენტის ID, ბმული, სათაური, იუზერების ID-ები]
     const USER_ITEMS = array(
         // სანდრო გელაშვილი (4341), Soner Sevim (4707) — MEP
         array('archi_pub_site_32', '/pub/site/32/', 'ვაკანსიის დაინიცირება', array(4341, 4707)),
+
+        array('archi_ucal_1252', '/company/personal/user/1252/calendar/', 'თინათინ პეტაშვილი', self::CAL_USERS),
+        array('archi_ucal_1362', '/company/personal/user/1362/calendar/', 'ნინო დონაძე', self::CAL_USERS),
+        array('archi_ucal_1360', '/company/personal/user/1360/calendar/', 'ქეთევან კურტანიძე', self::CAL_USERS),
+        array('archi_ucal_4407', '/company/personal/user/4407/calendar/', 'მარიამ საყვარელიძე', self::CAL_USERS),
+        array('archi_ucal_4462', '/company/personal/user/4462/calendar/', 'ეკა გურაბანიძე', self::CAL_USERS),
+        array('archi_ucal_4642', '/company/personal/user/4642/calendar/', 'თამარ დავითულიანი', self::CAL_USERS),
+        array('archi_ucal_4286', '/company/personal/user/4286/calendar/', 'შორენა მოწონელიძე', self::CAL_USERS),
+        array('archi_ucal_4287', '/company/personal/user/4287/calendar/', 'გვანცა ოქროპირიძე', self::CAL_USERS),
+        array('archi_ucal_1361', '/company/personal/user/1361/calendar/', 'მაია მიქაძე', self::CAL_USERS),
+        array('archi_ucal_4700', '/company/personal/user/4700/calendar/', 'ნინო რეკვავა', self::CAL_USERS),
+        array('archi_ucal_4711', '/company/personal/user/4711/calendar/', 'თეონა გეგეჭკორი', self::CAL_USERS),
+        array('archi_ucal_4149', '/company/personal/user/4149/calendar/', 'ნათია გიქოშვილი', self::CAL_USERS),
+        array('archi_ucal_5530', '/company/personal/user/5530/calendar/', 'მარიამ ხარატიშვილი', self::CAL_USERS),
+        array('archi_ucal_5566', '/company/personal/user/5566/calendar/', 'თამარ კუკავა', self::CAL_USERS),
+        array('archi_ucal_5563', '/company/personal/user/5563/calendar/', 'ასმათი თაბაგარი', self::CAL_USERS),
+        array('archi_ucal_5050', '/company/personal/user/5050/calendar/', 'სოფიკო კობახიძე', self::CAL_USERS),
     );
 
     public static function onProlog()
