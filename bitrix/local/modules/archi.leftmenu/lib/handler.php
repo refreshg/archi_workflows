@@ -8,6 +8,7 @@
 //
 // 1.1.0: დამატებით, კონკრეტულ იუზერებს (USER_ITEMS) მენიუს ხილული პუნქტების ბოლოში ემატება ბმული.
 // 1.2.0: USER_ITEMS-ში 16 გამყიდველის კალენდარი CAL_USERS-ისთვის (5544, 5601, 5532).
+// 1.3.0: ROLE_ITEMS — CRM როლის წევრებს ემატება ბმული (როლი „Projects“ 27 → „თიქეთების ბორდი“).
 
 namespace Archi\LeftMenu;
 
@@ -50,6 +51,12 @@ class Handler
         array('archi_ucal_5050', '/company/personal/user/5050/calendar/', 'სოფიკო კობახიძე', self::CAL_USERS),
     );
 
+    // CRM როლის წევრებისთვის: [მენიუს ელემენტის ID, ბმული, სათაური, CRM როლების ID-ები]
+    const ROLE_ITEMS = array(
+        // როლი „Projects“ (27)
+        array('archi_ticket_board', 'https://project-dep-ticket-board.vercel.app/#/summary?p=1', 'თიქეთების ბორდი', array(27)),
+    );
+
     public static function onProlog()
     {
         try {
@@ -71,6 +78,11 @@ class Handler
                     $mine[] = array($item[0], $item[1], $item[2]);
                 }
             }
+            foreach (self::ROLE_ITEMS as $item) {
+                if (self::inCrmRoles($USER, $item[3])) {
+                    $mine[] = array($item[0], $item[1], $item[2]);
+                }
+            }
             if ($mine) {
                 // ჯგუფების მენიუს სკრიპტი პუნქტებს style.display='none'-ით მალავს — !important მას ჯობნის.
                 // data-link-ით ვაჩენთ როგორც ჩვენს პუნქტს, ისე იმავე ბმულით მენიუში უკვე არსებულს.
@@ -84,6 +96,53 @@ class Handler
         } catch (\Throwable $e) {
             error_log('[archi.leftmenu] ' . $e->getMessage() . ' @ ' . $e->getFile() . ':' . $e->getLine());
         }
+    }
+
+    // მომხმარებელი CRM როლშია, თუ როლის რომელიმე წევრი (U.., G.., D.., DR..) მის access კოდებს ემთხვევა.
+    private static function inCrmRoles($user, array $roleIds)
+    {
+        $relations = self::crmRoleRelations();
+        $codes = array_flip((array)$user->GetAccessCodes());
+        foreach ($roleIds as $roleId) {
+            foreach ($relations[(int)$roleId] ?? array() as $code) {
+                if (isset($codes[$code])) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // როლი => წევრების კოდები; 10 წუთით იქეშება, რომ ყოველ გვერდზე ბაზას არ მივმართოთ.
+    private static function crmRoleRelations()
+    {
+        static $relations = null;
+        if ($relations !== null) {
+            return $relations;
+        }
+        $cache = \Bitrix\Main\Data\Cache::createInstance();
+        if ($cache->initCache(600, 'archi_leftmenu_crm_roles', '/archi.leftmenu')) {
+            $relations = $cache->getVars();
+            return $relations;
+        }
+        $relations = array();
+        if (\Bitrix\Main\Loader::includeModule('crm')) {
+            if (method_exists('\CCrmRole', 'GetRelation')) {
+                $res = \CCrmRole::GetRelation();
+                while ($row = $res->Fetch()) {
+                    $relations[(int)$row['ROLE_ID']][] = $row['RELATION'];
+                }
+            } elseif (class_exists('\Bitrix\Crm\Security\Role\Model\RoleRelationTable')) {
+                $res = \Bitrix\Crm\Security\Role\Model\RoleRelationTable::getList(array('select' => array('ROLE_ID', 'RELATION')));
+                while ($row = $res->fetch()) {
+                    $relations[(int)$row['ROLE_ID']][] = $row['RELATION'];
+                }
+            }
+        }
+        if ($cache->startDataCache()) {
+            $cache->endDataCache($relations);
+        }
+        return $relations;
     }
 
     private static function userItemsScript(array $items)
