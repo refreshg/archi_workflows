@@ -17,6 +17,8 @@
 // პასუხი (ვერ მოიძებნა):
 //   {"result": {"STATUS": "NOT_FOUND", "ID": "1277195"}}
 //
+// მხოლოდ Sales ფაიფლაინის (0) „წარმატებული“ (WON) დილები ბრუნდება; სხვა ფაიფლაინი ან ეტაპი → NOT_FOUND.
+//
 // კოდის ძებნა: დილის პროექტი (UF_CRM_5E1EECDB0571C) → ლისტი 111-ის ელემენტი იმავე სახელით
 // → ლისტი 231-ის ელემენტი, რომლის Project (PROPERTY_1728) ამ ელემენტზე მიუთითებს.
 // დილს კითხულობს webhook-ის მომხმარებლის უფლებებით (როგორც crm.deal.list). არაფერს წერს.
@@ -30,6 +32,9 @@ class Rest
     const FIELD_PROJECT = 'UF_CRM_5E1EECDB0571C';
     const FIELD_DEBT = 'UF_CRM_1644491469819';
     const FIELD_DETAIL = 'UF_CRM_1617787519405';
+
+    const SALES_CATEGORY = 0;          // Sales ფაიფლაინი
+    const STAGE_WON = 'WON';           // წარმატებული
 
     const IBLOCK_PROJECTS = 111;       // Project Detailed info
     const IBLOCK_UCC = 231;            // UCC Projects lists
@@ -68,7 +73,12 @@ class Rest
 
         $deal = \CCrmDeal::GetListEx(
             array(),
-            array('=ID' => $id, 'CHECK_PERMISSIONS' => 'Y'),
+            array(
+                '=ID' => $id,
+                '=CATEGORY_ID' => self::SALES_CATEGORY,
+                '=STAGE_ID' => self::STAGE_WON,
+                'CHECK_PERMISSIONS' => 'Y',
+            ),
             false,
             false,
             array('ID', self::FIELD_PROJECT, self::FIELD_DEBT, self::FIELD_DETAIL)
