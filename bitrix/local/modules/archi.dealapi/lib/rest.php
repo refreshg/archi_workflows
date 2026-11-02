@@ -16,6 +16,8 @@
 //               "NBG_RATE_DATE": "2026-10-16"}}               // კურსის თარიღი (დღევანდელი; ბანკი თუ არ პასუხობს — ბოლო ცნობილი)
 // პასუხი (ვერ მოიძებნა):
 //   {"result": {"STATUS": "NOT_FOUND", "ID": "1277195"}}
+// პასუხი (ID არ არის დადებითი მთელი რიცხვი ან არ არის მითითებული) — HTTP 200:
+//   {"result": {"STATUS": "INVALID_ID", "ID": "a234"}}          // ID null, თუ საერთოდ არ გადმოეცა
 //
 // მხოლოდ Sales ფაიფლაინის (0) „წარმატებული“ (WON) დილები ბრუნდება; სხვა ფაიფლაინი ან ეტაპი → NOT_FOUND.
 //
@@ -62,10 +64,13 @@ class Rest
             $filter = array_change_key_case($query['FILTER'], CASE_UPPER);
             $id = isset($filter['ID']) ? $filter['ID'] : null;
         }
-        $id = (int)$id;
-        if ($id <= 0) {
-            throw new \Bitrix\Rest\RestException('ID is required', 'INVALID_ID', \CRestServer::STATUS_WRONG_REQUEST);
+        // მხოლოდ დადებითი მთელი რიცხვი ("1277195"); "a234", "234a", ცარიელი → 200 + STATUS INVALID_ID
+        // (პარტნიორის მოთხოვნით 400-ის ნაცვლად, რომ მათმა კლიენტმა პასუხი წაიკითხოს)
+        $raw = is_scalar($id) ? trim((string)$id) : '';
+        if ($raw === '' || !ctype_digit($raw) || (int)$raw <= 0) {
+            return array('STATUS' => 'INVALID_ID', 'ID' => is_scalar($id) ? (string)$id : null);
         }
+        $id = (int)$raw;
 
         if (!Loader::includeModule('crm') || !Loader::includeModule('iblock')) {
             throw new \Bitrix\Rest\RestException('Module not available', 'INTERNAL_ERROR', \CRestServer::STATUS_INTERNAL);
