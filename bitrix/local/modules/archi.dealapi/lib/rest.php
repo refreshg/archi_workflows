@@ -24,6 +24,19 @@
 // კოდის ძებნა: დილის პროექტი (UF_CRM_5E1EECDB0571C) → ლისტი 111-ის ელემენტი იმავე სახელით
 // → ლისტი 231-ის ელემენტი, რომლის Project (PROPERTY_1728) ამ ელემენტზე მიუთითებს.
 // დილს კითხულობს webhook-ის მომხმარებლის უფლებებით (როგორც crm.deal.list). არაფერს წერს.
+//
+// ---------------------------------------------------------------------------------------------------------------
+// REST მეთოდი archi.deal.schedule — დილის განვადების გრაფიკის PDF, ზუსტად ისეთი, როგორსაც ბრაუზერის დამატება
+// „Archi – გრაფიკის PDF“ აკეთებს კალკულატორიდან (/crm/deal/calculator.php). იხ. lib/schedulepdf.php და pdf/render.js.
+//
+// მოთხოვნა: POST /rest/<user>/<code>/archi.deal.schedule.json   {"filter": {"ID": "1454698"}}   ან   {"ID": "1454698"}
+//
+// პასუხი: {"result": {"STATUS": "FOUND", "ID": "1454698", "FILE_NAME": "grafiki_1454698_2026-11-03.pdf",
+//                     "CONTENT_TYPE": "application/pdf", "PDF_BASE64": "JVBERi0xLjMK..."}}   // PDF ფაილი base64-ში
+// სხვა STATUS (ყველა HTTP 200): NOT_FOUND — დილი არ არსებობს ან არ არის Sales ფაიფლაინში (0);
+//   NO_SCHEDULE — დილზე გრაფიკი არ არის დაგენერირებული; INVALID_ID — ID არ არის დადებითი მთელი რიცხვი;
+//   ERROR — PDF ვერ აიწყო (დეტალი სერვერის error_log-შია).
+// ეტაპი არ მოწმდება — ნებისმიერ ეტაპზე მყოფი Sales დილის გრაფიკი ბრუნდება.
 
 namespace Archi\DealApi;
 
@@ -52,11 +65,16 @@ class Rest
                     'callback' => array(__CLASS__, 'dealDebt'),
                     'options' => array(),
                 ),
+                'archi.deal.schedule' => array(
+                    'callback' => array(__CLASS__, 'dealSchedule'),
+                    'options' => array(),
+                ),
             ),
         );
     }
 
-    public static function dealDebt($query, $nav, \CRestServer $server)
+    // {"filter": {"ID": "..."}} ან {"ID": "..."} → დადებითი მთელი რიცხვი, ან null და $sent-ში ის, რაც გამოგზავნეს
+    private static function requestId($query, &$sent)
     {
         $query = array_change_key_case(is_array($query) ? $query : array(), CASE_UPPER);
         $id = isset($query['ID']) ? $query['ID'] : null;
@@ -64,13 +82,19 @@ class Rest
             $filter = array_change_key_case($query['FILTER'], CASE_UPPER);
             $id = isset($filter['ID']) ? $filter['ID'] : null;
         }
-        // მხოლოდ დადებითი მთელი რიცხვი ("1277195"); "a234", "234a", ცარიელი → 200 + STATUS INVALID_ID
-        // (პარტნიორის მოთხოვნით 400-ის ნაცვლად, რომ მათმა კლიენტმა პასუხი წაიკითხოს)
+        $sent = is_scalar($id) ? (string)$id : null;
+        // მხოლოდ დადებითი მთელი რიცხვი ("1277195"); "a234", "234a", ცარიელი → null
         $raw = is_scalar($id) ? trim((string)$id) : '';
-        if ($raw === '' || !ctype_digit($raw) || (int)$raw <= 0) {
-            return array('STATUS' => 'INVALID_ID', 'ID' => is_scalar($id) ? (string)$id : null);
+        return ($raw !== '' && ctype_digit($raw) && (int)$raw > 0) ? (int)$raw : null;
+    }
+
+    public static function dealDebt($query, $nav, \CRestServer $server)
+    {
+        // არასწორ ID-ზე 200 + STATUS INVALID_ID (პარტნიორის მოთხოვნით 400-ის ნაცვლად, რომ მათმა კლიენტმა პასუხი წაიკითხოს)
+        $id = self::requestId($query, $sent);
+        if ($id === null) {
+            return array('STATUS' => 'INVALID_ID', 'ID' => $sent);
         }
-        $id = (int)$raw;
 
         if (!Loader::includeModule('crm') || !Loader::includeModule('iblock')) {
             throw new \Bitrix\Rest\RestException('Module not available', 'INTERNAL_ERROR', \CRestServer::STATUS_INTERNAL);
@@ -128,6 +152,44 @@ class Rest
             'NBG_RATE_DATE' => $rate ? $rate['DATE'] : null,
         );
     }
+
+    // ---- archi.deal.schedule: განვადების გრაფიკის PDF ------------------------------------------------------------
+
+    public static function dealSchedule($query, $nav, \CRestServer $server)
+    {
+        $id = self::requestId($query, $sent);
+        if ($id === null) {
+            return array('STATUS' => 'INVALID_ID', 'ID' => $sent);
+        }
+        if (!Loader::includeModule('crm') || !Loader::includeModule('iblock')) {
+            throw new \Bitrix\Rest\RestException('Module not available', 'INTERNAL_ERROR', \CRestServer::STATUS_INTERNAL);
+        }
+
+        // დილი Sales ფაიფლაინიდან (ნებისმიერ ეტაპზე), webhook-ის მომხმარებლის უფლებებით
+        $deal = \CCrmDeal::GetListEx(
+            array(),
+            array('=ID' => $id, '=CATEGORY_ID' => self::SALES_CATEGORY, 'CHECK_PERMISSIONS' => 'Y'),
+            false,
+            false,
+            array('ID', 'OPPORTUNITY')
+        )->Fetch();
+        if (!$deal) {
+            return array('STATUS' => 'NOT_FOUND', 'ID' => (string)$id);
+        }
+
+        $pdf = SchedulePdf::build($id, $deal['OPPORTUNITY']);
+        if ($pdf['STATUS'] !== 'FOUND') {
+            return array('STATUS' => $pdf['STATUS'], 'ID' => (string)$id);
+        }
+        return array(
+            'STATUS' => 'FOUND',
+            'ID' => (string)$id,
+            'FILE_NAME' => $pdf['FILE_NAME'],
+            'CONTENT_TYPE' => 'application/pdf',
+            'PDF_BASE64' => $pdf['PDF_BASE64'],
+        );
+    }
+
 
     // "692.03" ან "692.03|USD" → 692.03; ცარიელი → null
     private static function amount($value)
