@@ -9,6 +9,7 @@
 // 1.1.0: დამატებით, კონკრეტულ იუზერებს (USER_ITEMS) მენიუს ხილული პუნქტების ბოლოში ემატება ბმული.
 // 1.2.0: USER_ITEMS-ში 16 გამყიდველის კალენდარი CAL_USERS-ისთვის (5544, 5601, 5532).
 // 1.3.0: ROLE_ITEMS — CRM როლის წევრებს ემატება ბმული (როლი „Projects“ 27 → „თიქეთების ბორდი“).
+// 1.4.0: ONLY_MENU — კონკრეტულ იუზერს მარცხენა მენიუში ჩანს მხოლოდ მითითებული პუნქტები (დანარჩენი CSS-ით იმალება).
 
 namespace Archi\LeftMenu;
 
@@ -57,6 +58,38 @@ class Handler
         array('archi_ticket_board', 'https://project-dep-ticket-board.vercel.app/#/summary?p=1', 'თიქეთების ბორდი', array(27)),
     );
 
+    // იუზერი => მარცხენა მენიუში მხოლოდ ეს ჩანს: 'keep' — Bitrix-ის სტანდარტული პუნქტები (ელემენტის id),
+    // 'items' — ბმულები [მენიუს ელემენტის ID, ბმული, სათაური] (თუ არ აქვს, ემატება; თუ აქვს, ჩანს).
+    const ONLY_MENU = array(
+        // ნინო ყაჭეიშვილი — გაყიდვების დირექტორი
+        5635 => array(
+            'keep' => array('bx_left_menu_menu_crm_favorite', 'bx_left_menu_menu_tasks'),
+            'items' => array(
+                array('archi_only_year_report', '/MontlyReport/summery/', 'წლიური რეპორტი'),
+                array('archi_only_liveboard', '/custom/liveboard/', 'liveboard'),
+                array('archi_only_calculator', '/management/calculator.php', 'ზოგადი კალკულატორი'),
+                array('archi_only_hot_analytics', '/crm/deal/reports/hot_deals_analytics/page.php', 'ცხელი ლიდების ანალიტიკა'),
+                array('archi_only_brokers', '/marketplace/app/34/', 'Brokers Sale Report'),
+                array('archi_only_price_change', '/custom/prodPriceChange/', 'ფასების ცვლილება'),
+                array('archi_only_sale_report', 'https://archi-sale-rep2.vercel.app/', 'გაყიდვების რეპორტი - დეტალურად'),
+            ),
+        ),
+    );
+
+    // ყველა პუნქტი, გარდა ნებადართულისა, იმალება — !important ჯობნის ჯგუფების მენიუს სკრიპტის style.display-ს
+    private static function onlyMenuCss(array $only)
+    {
+        $not = '';
+        foreach ($only['keep'] as $id) {
+            $not .= ':not(#' . preg_replace('/[^A-Za-z0-9_-]/', '', $id) . ')';
+        }
+        foreach ($only['items'] as $item) {
+            $not .= ':not([data-link="' . str_replace('"', '', $item[1]) . '"])';
+        }
+        return '.menu-items>li[data-role="item"]' . $not . ',#left-menu-hidden-items-list>li[data-role="item"]' . $not
+            . '{display:none!important}';
+    }
+
     public static function onProlog()
     {
         try {
@@ -83,10 +116,17 @@ class Handler
                     $mine[] = array($item[0], $item[1], $item[2]);
                 }
             }
+            $onlyCss = '';
+            if (array_key_exists($userId, self::ONLY_MENU)) {
+                foreach (self::ONLY_MENU[$userId]['items'] as $item) {
+                    $mine[] = $item;
+                }
+                $onlyCss = self::onlyMenuCss(self::ONLY_MENU[$userId]);
+            }
             if ($mine) {
                 // ჯგუფების მენიუს სკრიპტი პუნქტებს style.display='none'-ით მალავს — !important მას ჯობნის.
                 // data-link-ით ვაჩენთ როგორც ჩვენს პუნქტს, ისე იმავე ბმულით მენიუში უკვე არსებულს.
-                $css = '';
+                $css = $onlyCss;
                 foreach ($mine as $item) {
                     $css .= '.menu-items>li[data-link="' . str_replace('"', '', $item[1]) . '"]{display:flex!important}';
                 }
