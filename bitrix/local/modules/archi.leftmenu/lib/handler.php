@@ -10,6 +10,7 @@
 // 1.2.0: USER_ITEMS-ში 16 გამყიდველის კალენდარი CAL_USERS-ისთვის (5544, 5601, 5532).
 // 1.3.0: ROLE_ITEMS — CRM როლის წევრებს ემატება ბმული (როლი „Projects“ 27 → „თიქეთების ბორდი“).
 // 1.4.0: ONLY_MENU — კონკრეტულ იუზერს მარცხენა მენიუში ჩანს მხოლოდ მითითებული პუნქტები (დანარჩენი CSS-ით იმალება).
+// 1.4.1: ქოლცენტრს (ჯგუფი 69 + CAL_USERS) დაემატა მარიამ ლაფანაშვილის (5585) კალენდარი.
 
 namespace Archi\LeftMenu;
 
@@ -24,6 +25,7 @@ class Handler
         array('archi_cal_5566', '/company/personal/user/5566/calendar/', 'თამარ კუკავა calendar'),
         array('archi_cal_5563', '/company/personal/user/5563/calendar/', 'ასმათი თაბაგარი calendar'),
         array('archi_cal_5050', '/company/personal/user/5050/calendar/', 'სოფიკო კობახიძე calendar'),
+        array('archi_cal_5585', '/company/personal/user/5585/calendar/', 'მარიამ ლაფანაშვილი calendar'),
     );
 
     // გამყიდველების კალენდრები: მარიამ ყულეჯიშვილი (5544), მარიამ მიქელაძე (5601), სალომე მალასიძე (5532)
@@ -50,6 +52,7 @@ class Handler
         array('archi_ucal_5566', '/company/personal/user/5566/calendar/', 'თამარ კუკავა', self::CAL_USERS),
         array('archi_ucal_5563', '/company/personal/user/5563/calendar/', 'ასმათი თაბაგარი', self::CAL_USERS),
         array('archi_ucal_5050', '/company/personal/user/5050/calendar/', 'სოფიკო კობახიძე', self::CAL_USERS),
+        array('archi_ucal_5585', '/company/personal/user/5585/calendar/', 'მარიამ ლაფანაშვილი', self::CAL_USERS),
     );
 
     // CRM როლის წევრებისთვის: [მენიუს ელემენტის ID, ბმული, სათაური, CRM როლების ID-ები]
