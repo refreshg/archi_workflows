@@ -55,9 +55,9 @@ class Handler
     private static function css()
     {
         return <<<'CSS'
-.abs-btn{display:inline-flex!important;align-items:center;gap:6px;margin-right:8px!important}
+.abs-btn{display:inline-flex!important;align-items:center;gap:6px;margin:0!important}
 .abs-btn svg{width:16px;height:16px;flex:none}
-.abs-badge{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;margin-right:8px;border-radius:15px;
+.abs-badge{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border-radius:15px;
   background:#e8f7ee;color:#1f7a45;font:600 12px/1 var(--ui-font-family-primary,"Open Sans",Arial,sans-serif);white-space:nowrap;align-self:center}
 .abs-badge.abs-test{background:#fff4dc;color:#8a5a00}
 .abs-badge svg{width:14px;height:14px}
@@ -128,11 +128,25 @@ CSS;
         } else if (window.confirm(text)) { ok(); }
     }
 
+    // ჩვენი ღილაკების ცალკე ხაზი სათაურის პანელის ქვემოთ (საერთოა archi.* მოდულებისთვის)
+    function actionBar() {
+        var c = document.getElementById('archi-deal-actions');
+        if (c) { return c; }
+        var rb = document.querySelector('.ui-toolbar-right-buttons');
+        var tb = rb && rb.closest ? (rb.closest('.ui-toolbar') || rb.parentNode) : null;
+        if (!tb || !tb.parentNode) { return null; }
+        c = document.createElement('div');
+        c.id = 'archi-deal-actions';
+        c.style.cssText = 'display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:0 0 12px;';
+        tb.parentNode.insertBefore(c, tb.nextSibling);
+        return c;
+    }
+
     function renderBadge() {
-        var bar = document.querySelector('.ui-toolbar-right-buttons'); if (!bar) { return; }
+        var bar = actionBar(); if (!bar) { return; }
         var b = document.getElementById(BADGE_ID);
         if (!CFG.last) { if (b) { b.remove(); } return; }
-        if (!b) { b = document.createElement('span'); b.id = BADGE_ID; var btn = document.getElementById(BTN_ID); bar.insertBefore(b, btn ? btn.nextSibling : bar.firstChild); }
+        if (!b) { b = document.createElement('span'); b.id = BADGE_ID; var btn = document.getElementById(BTN_ID); if (btn && btn.nextSibling) { bar.insertBefore(b, btn.nextSibling); } else { bar.appendChild(b); } }
         b.className = 'abs-badge' + (CFG.last.test ? ' abs-test' : '');
         b.innerHTML = CHECK + 'SMS გაგზავნილია · ' + esc(CFG.last.date) + (CFG.last.test ? ' (ტესტი)' : '');
         b.title = (CFG.last.user ? CFG.last.user + ' · ' : '') + (CFG.last.phone || '');
@@ -207,13 +221,13 @@ CSS;
     }
 
     function ensure() {
-        var bar = document.querySelector('.ui-toolbar-right-buttons'); if (!bar) { return false; }
+        var bar = actionBar(); if (!bar) { return false; }
         if (!document.getElementById(BTN_ID)) {
             var btn = document.createElement('button');
             btn.id = BTN_ID; btn.type = 'button'; btn.className = 'ui-btn ui-btn-light-border ui-btn-md abs-btn';
             btn.innerHTML = ICON + '<span>SMS</span>'; btn.title = 'SMS გაგზავნა კლიენტთან';
             btn.addEventListener('click', function (e) { e.preventDefault(); openPopup(); });
-            bar.insertBefore(btn, bar.firstChild);
+            bar.appendChild(btn);
         }
         if (!document.getElementById(BADGE_ID)) { renderBadge(); }
         return true;
