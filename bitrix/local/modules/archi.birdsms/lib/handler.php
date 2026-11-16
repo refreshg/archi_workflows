@@ -55,9 +55,8 @@ class Handler
     private static function css()
     {
         return <<<'CSS'
-.abs-btn{display:inline-flex!important;align-items:center;gap:6px;margin:0!important}
-.abs-btn svg{width:16px;height:16px;flex:none}
-.abs-badge{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border-radius:15px;
+.abs-btn svg{width:15px;height:15px;flex:none;color:#3eb3e3}
+.abs-badge{display:inline-flex;align-items:center;gap:6px;height:38px;box-sizing:border-box;padding:0 16px;border-radius:25px;
   background:#e8f7ee;color:#1f7a45;font:600 12px/1 var(--ui-font-family-primary,"Open Sans",Arial,sans-serif);white-space:nowrap;align-self:center}
 .abs-badge.abs-test{background:#fff4dc;color:#8a5a00}
 .abs-badge svg{width:14px;height:14px}
@@ -128,16 +127,29 @@ CSS;
         } else if (window.confirm(text)) { ok(); }
     }
 
-    // ჩვენი ღილაკების ცალკე ხაზი სათაურის პანელის ქვემოთ (საერთოა archi.* მოდულებისთვის)
+    // ჩვენი ღილაკების ხაზი: „პროცესები“ ღილაკის (#buttonerWrapper) გვერდით, იმავე სტილით; თუ ის ბლოკი არ არის — სათაურის პანელის ქვემოთ
+    var PILL = 'background:#f5fcff;border:1px solid #3eb3e3;border-radius:25px;color:#2a2a2a;font-size:14px;line-height:20px;font-weight:600;font-family:inherit;padding:8px 20px;height:38px;box-sizing:border-box;cursor:pointer;display:inline-flex;align-items:center;gap:6px;margin:0;white-space:nowrap;transition:background .2s;';
     function actionBar() {
         var c = document.getElementById('archi-deal-actions');
-        if (c) { return c; }
+        var w = document.getElementById('buttonerWrapper');
+        if (!c) {
+            c = document.createElement('div');
+            c.id = 'archi-deal-actions';
+        }
+        if (w) {
+            if (c.parentNode !== w) {
+                w.style.display = 'flex'; w.style.flexWrap = 'wrap'; w.style.alignItems = 'center';
+                for (var i = 1; i < w.children.length; i++) { if (w.children[i] !== c) { w.children[i].style.flexBasis = '100%'; } }
+                c.style.cssText = 'display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0;';
+                w.insertBefore(c, w.children[1] || null);
+            }
+            return c;
+        }
+        if (c.parentNode) { return c; }
         var rb = document.querySelector('.ui-toolbar-right-buttons');
         var tb = rb && rb.closest ? (rb.closest('.ui-toolbar') || rb.parentNode) : null;
         if (!tb || !tb.parentNode) { return null; }
-        c = document.createElement('div');
-        c.id = 'archi-deal-actions';
-        c.style.cssText = 'display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:0 0 12px;';
+        c.style.cssText = 'display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:-2px 0 14px;';
         tb.parentNode.insertBefore(c, tb.nextSibling);
         return c;
     }
@@ -224,7 +236,7 @@ CSS;
         var bar = actionBar(); if (!bar) { return false; }
         if (!document.getElementById(BTN_ID)) {
             var btn = document.createElement('button');
-            btn.id = BTN_ID; btn.type = 'button'; btn.className = 'ui-btn ui-btn-light-border ui-btn-md abs-btn';
+            btn.id = BTN_ID; btn.type = 'button'; btn.className = 'abs-btn'; btn.style.cssText = PILL; btn.onmouseenter = function () { btn.style.background = '#e3f6ff'; }; btn.onmouseleave = function () { btn.style.background = '#f5fcff'; };
             btn.innerHTML = ICON + '<span>SMS</span>'; btn.title = 'SMS გაგზავნა კლიენტთან';
             btn.addEventListener('click', function (e) { e.preventDefault(); openPopup(); });
             bar.appendChild(btn);

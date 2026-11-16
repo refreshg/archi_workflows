@@ -4,6 +4,7 @@
 // ღილაკი ბარათის ზედა მარჯვენა პანელში ჩნდება, დასტურის შემდეგ უშვებს ბიზნეს-პროცესს 1300
 // („Inter > Sales > Geo“ — დილი გადადის Sales-ის ფაიფლაინში) და ბარათს ანახლებს.
 // დილის ხელმოწერილ იდენტიფიკატორს ვიღებთ იმავე გვერდზე არსებული „Workflows“ ღილაკის კონფიგურაციიდან.
+// 1.3.0: ღილაკები „პროცესები“ ღილაკის ხაზშია, იმავე სტილით.
 // 1.2.0: ღილაკები სათაურის პანელის ქვემოთ ცალკე ხაზშია (პანელი აღარ იჭრება).
 // 1.1.0: მეორე ღილაკი „ბროკერებში გადატანა“ — BP 1301 („Inter>Broikers>GEO“).
 // სხვა არაფერს ვეხებით. Uninstall აბრუნებს ყველაფერს.
@@ -18,7 +19,7 @@ class Handler
     // [ღილაკის id, BP შაბლონი, წარწერა, დასტურის კითხვა, შეტყობინება, სტილი]
     const BUTTONS = array(
         array('archi-intltosales-btn', 1300, 'Sales-ში გადატანა', 'დილი გადავიდეს Sales-ის ფაიფლაინში?', 'დილი გადადის Sales-ში…', 'ui-btn-primary'),
-        array('archi-intltobrokers-btn', 1301, 'ბროკერებში გადატანა', 'დილი გადავიდეს ბროკერების ფაიფლაინში?', 'დილი გადადის ბროკერებში…', 'ui-btn-light-border'),
+        array('archi-intltobrokers-btn', 1301, 'ბროკერებში გადატანა', 'დილი გადავიდეს ბროკერების ფაიფლაინში?', 'დილი გადადის ბროკერებში…', 'ui-btn-primary'),
     );
 
     public static function onProlog()
@@ -61,16 +62,29 @@ class Handler
     var CFG = {$cfg};
     var tries = 0;
 
-    // ჩვენი ღილაკების ცალკე ხაზი სათაურის პანელის ქვემოთ (საერთოა archi.* მოდულებისთვის)
+    // ჩვენი ღილაკების ხაზი: „პროცესები“ ღილაკის (#buttonerWrapper) გვერდით, იმავე სტილით; თუ ის ბლოკი არ არის — სათაურის პანელის ქვემოთ
+    var PILL = 'background:#f5fcff;border:1px solid #3eb3e3;border-radius:25px;color:#2a2a2a;font-size:14px;line-height:20px;font-weight:600;font-family:inherit;padding:8px 20px;height:38px;box-sizing:border-box;cursor:pointer;display:inline-flex;align-items:center;gap:6px;margin:0;white-space:nowrap;transition:background .2s;';
     function actionBar() {
         var c = document.getElementById('archi-deal-actions');
-        if (c) { return c; }
+        var w = document.getElementById('buttonerWrapper');
+        if (!c) {
+            c = document.createElement('div');
+            c.id = 'archi-deal-actions';
+        }
+        if (w) {
+            if (c.parentNode !== w) {
+                w.style.display = 'flex'; w.style.flexWrap = 'wrap'; w.style.alignItems = 'center';
+                for (var i = 1; i < w.children.length; i++) { if (w.children[i] !== c) { w.children[i].style.flexBasis = '100%'; } }
+                c.style.cssText = 'display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0;';
+                w.insertBefore(c, w.children[1] || null);
+            }
+            return c;
+        }
+        if (c.parentNode) { return c; }
         var rb = document.querySelector('.ui-toolbar-right-buttons');
         var tb = rb && rb.closest ? (rb.closest('.ui-toolbar') || rb.parentNode) : null;
         if (!tb || !tb.parentNode) { return null; }
-        c = document.createElement('div');
-        c.id = 'archi-deal-actions';
-        c.style.cssText = 'display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:0 0 12px;';
+        c.style.cssText = 'display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:-2px 0 14px;';
         tb.parentNode.insertBefore(c, tb.nextSibling);
         return c;
     }
@@ -125,8 +139,11 @@ class Handler
                 var btn = document.createElement('button');
                 btn.id = b[0];
                 btn.type = 'button';
-                btn.className = 'ui-btn ' + b[5] + ' ui-btn-md';
-                btn.textContent = b[2];
+                btn.style.cssText = PILL;
+                btn.onmouseenter = function () { btn.style.background = '#e3f6ff'; };
+                btn.onmouseleave = function () { btn.style.background = '#f5fcff'; };
+                btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3eb3e3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span></span>';
+                btn.lastChild.textContent = b[2];
                 btn.addEventListener('click', function (e) {
                     e.preventDefault();
                     if (BX.UI && BX.UI.Dialogs && BX.UI.Dialogs.MessageBox) {
