@@ -10,6 +10,7 @@
 // 1.2.0: USER_ITEMS-ში 16 გამყიდველის კალენდარი CAL_USERS-ისთვის (5544, 5601, 5532).
 // 1.3.0: ROLE_ITEMS — CRM როლის წევრებს ემატება ბმული (როლი „Projects“ 27 → „თიქეთების ბორდი“).
 // 1.4.0: ONLY_MENU — კონკრეტულ იუზერს მარცხენა მენიუში ჩანს მხოლოდ მითითებული პუნქტები (დანარჩენი CSS-ით იმალება).
+// 1.5.0: ROLE_ITEMS — „რეესტრული გადაფორმებები“ (/custom/report/reestrDashboard/) როლებისთვის Customer Service (16) და Accounting (18).
 // 1.4.1: ქოლცენტრს (ჯგუფი 69 + CAL_USERS) დაემატა მარიამ ლაფანაშვილის (5585) კალენდარი.
 
 namespace Archi\LeftMenu;
@@ -59,6 +60,8 @@ class Handler
     const ROLE_ITEMS = array(
         // როლი „Projects“ (27)
         array('archi_ticket_board', 'https://project-dep-ticket-board.vercel.app/#/summary?p=1', 'თიქეთების ბორდი', array(27)),
+        // როლები „Customer Service“ (16) და „Accounting“ (18)
+        array('archi_reestr_dashboard', '/custom/report/reestrDashboard/', 'რეესტრული გადაფორმებები', array(16, 18)),
     );
 
     // იუზერი => მარცხენა მენიუში მხოლოდ ეს ჩანს: 'keep' — Bitrix-ის სტანდარტული პუნქტები (ელემენტის id),
