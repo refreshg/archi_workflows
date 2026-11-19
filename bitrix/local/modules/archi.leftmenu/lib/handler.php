@@ -10,6 +10,7 @@
 // 1.2.0: USER_ITEMS-ში 16 გამყიდველის კალენდარი CAL_USERS-ისთვის (5544, 5601, 5532).
 // 1.3.0: ROLE_ITEMS — CRM როლის წევრებს ემატება ბმული (როლი „Projects“ 27 → „თიქეთების ბორდი“).
 // 1.4.0: ONLY_MENU — კონკრეტულ იუზერს მარცხენა მენიუში ჩანს მხოლოდ მითითებული პუნქტები (დანარჩენი CSS-ით იმალება).
+// 1.6.0: GROUP_ITEMS — ჯგუფ salemanager-ს (17): „წლიური რეპორტი“ (/MontlyReport/summery/) და „Brokers Sale Report“ (/marketplace/app/34/).
 // 1.5.0: ROLE_ITEMS — „რეესტრული გადაფორმებები“ (/custom/report/reestrDashboard/) როლებისთვის Customer Service (16) და Accounting (18).
 // 1.4.1: ქოლცენტრს (ჯგუფი 69 + CAL_USERS) დაემატა მარიამ ლაფანაშვილის (5585) კალენდარი.
 
@@ -64,6 +65,14 @@ class Handler
         array('archi_reestr_dashboard', '/custom/report/reestrDashboard/', 'რეესტრული გადაფორმებები', array(16, 18)),
     );
 
+    // მომხმარებელთა ჯგუფის წევრებისთვის: [მენიუს ელემენტის ID, ბმული, სათაური, ჯგუფების ID-ები]
+    // (თუ იუზერს იგივე ბმული მენიუში უკვე აქვს, ახალი არ ემატება — არსებული ჩანს)
+    const GROUP_ITEMS = array(
+        // ჯგუფი „salemanager“ (17)
+        array('archi_grp_year_report', '/MontlyReport/summery/', 'წლიური რეპორტი', array(17)),
+        array('archi_grp_brokers', '/marketplace/app/34/', 'Brokers Sale Report', array(17)),
+    );
+
     // იუზერი => მარცხენა მენიუში მხოლოდ ეს ჩანს: 'keep' — Bitrix-ის სტანდარტული პუნქტები (ელემენტის id),
     // 'items' — ბმულები [მენიუს ელემენტის ID, ბმული, სათაური] (თუ არ აქვს, ემატება; თუ აქვს, ჩანს).
     const ONLY_MENU = array(
@@ -114,6 +123,11 @@ class Handler
             $mine = array();
             foreach (self::USER_ITEMS as $item) {
                 if (in_array($userId, $item[3], true)) {
+                    $mine[] = array($item[0], $item[1], $item[2]);
+                }
+            }
+            foreach (self::GROUP_ITEMS as $item) {
+                if (array_intersect($groups, $item[3])) {
                     $mine[] = array($item[0], $item[1], $item[2]);
                 }
             }
