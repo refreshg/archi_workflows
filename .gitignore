@@ -22,3 +22,6 @@ Thumbs.db
 # ლოკალური output / ლოგები
 output/
 *.log
+
+# BP backups that contain credentials (never commit)
+*.PRIVATE.json
