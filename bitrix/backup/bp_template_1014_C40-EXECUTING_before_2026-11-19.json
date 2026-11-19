@@ -1,0 +1,49 @@
+{
+ "ID": "1014",
+ "NAME": "Automation template (C40:EXECUTING)",
+ "MODIFIED": "08/20/2026 10:29:49 am",
+ "DOCUMENT_TYPE": [
+  "crm",
+  "CCrmDocumentDeal",
+  "DEAL"
+ ],
+ "AUTO_EXECUTE": "8",
+ "TEMPLATE": [
+  {
+   "Type": "SequentialWorkflowActivity",
+   "Name": "Template",
+   "Activated": "Y",
+   "Properties": {
+    "Title": "Bizproc Automation template"
+   },
+   "Children": [
+    {
+     "Type": "SetFieldActivity",
+     "Name": "A7362_28190_88071_23835",
+     "Activated": "Y",
+     "Properties": {
+      "FieldValue": {
+       "UF_1632120969921": "",
+       "UF_CRM_1606240573240": "",
+       "UF_CRM_1606240927242": "",
+       "UF_CRM_1691155597010": "0",
+       "UF_CRM_1693390736751": [],
+       "UF_CRM_1634640934384": []
+      },
+      "ModifiedBy": [],
+      "MergeMultipleFields": "N",
+      "Title": "Modify element",
+      "EditorComment": ""
+     },
+     "Children": []
+    }
+   ]
+  }
+ ],
+ "PARAMETERS": [],
+ "VARIABLES": [],
+ "CONSTANTS": [],
+ "IS_MODIFIED": "Y",
+ "MODULE_ID": "crm",
+ "ENTITY": "CCrmDocumentDeal"
+}

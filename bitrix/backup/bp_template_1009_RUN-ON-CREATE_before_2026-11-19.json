@@ -1,0 +1,1244 @@
+{
+ "ID": "1009",
+ "MODIFIED": "10/19/2026 04:36:03 pm",
+ "TEMPLATE": [
+  {
+   "Type": "SequentialWorkflowActivity",
+   "Name": "Template",
+   "Activated": "Y",
+   "Properties": {
+    "Title": "Sequential BP Activity",
+    "Permission": []
+   },
+   "Children": [
+    {
+     "Type": "IfElseActivity",
+     "Name": "A34641_49527_40442_19460",
+     "Activated": "Y",
+     "Properties": {
+      "Title": "Condition"
+     },
+     "Children": [
+      {
+       "Type": "IfElseBranchActivity",
+       "Name": "A68658_83803_53859_56565",
+       "Activated": "Y",
+       "Properties": {
+        "Title": "SALES lead",
+        "fieldcondition": [
+         [
+          "CATEGORY_ID",
+          "=",
+          "0",
+          "0"
+         ]
+        ],
+        "EditorComment": ""
+       },
+       "Children": [
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A93991_97759_2468_18479",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "843",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "check - sales/hot leads",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "IfElseActivity",
+         "Name": "A6616_48354_71027_31862",
+         "Activated": "Y",
+         "Properties": {
+          "Title": "Condition"
+         },
+         "Children": [
+          {
+           "Type": "IfElseBranchActivity",
+           "Name": "A85159_85811_30882_25439",
+           "Activated": "Y",
+           "Properties": {
+            "Title": "Complex Condition Branch"
+           },
+           "Children": [
+            {
+             "Type": "StartWorkflowActivity",
+             "Name": "A60314_29867_16647_14957",
+             "Activated": "Y",
+             "Properties": {
+              "DocumentId": "{=Document:ID}",
+              "TemplateId": "158",
+              "UseSubscription": "N",
+              "TemplateParameters": [],
+              "Title": "sale Deal Approve -",
+              "EditorComment": ""
+             },
+             "Children": []
+            },
+            {
+             "Type": "StartWorkflowActivity",
+             "Name": "A99966_67262_92390_68605",
+             "Activated": "Y",
+             "Properties": {
+              "DocumentId": "{=Document:ID}",
+              "TemplateId": "259",
+              "UseSubscription": "N",
+              "TemplateParameters": [],
+              "Title": "Meeting Raport",
+              "EditorComment": ""
+             },
+             "Children": []
+            },
+            {
+             "Type": "StartWorkflowActivity",
+             "Name": "A39988_22850_32227_43883",
+             "Activated": "Y",
+             "Properties": {
+              "DocumentId": "{=Document:ID}",
+              "TemplateId": "260",
+              "UseSubscription": "N",
+              "TemplateParameters": [],
+              "Title": "ALL Raport Stages",
+              "EditorComment": ""
+             },
+             "Children": []
+            },
+            {
+             "Type": "StartWorkflowActivity",
+             "Name": "A41716_49339_36917_74668",
+             "Activated": "Y",
+             "Properties": {
+              "DocumentId": "{=Document:ID}",
+              "TemplateId": "272",
+              "UseSubscription": "N",
+              "TemplateParameters": [],
+              "Title": "[გადანაწილება] - შეტყობინება პრიორიტეტულ ლიდზე",
+              "EditorComment": ""
+             },
+             "Children": []
+            },
+            {
+             "Type": "StartWorkflowActivity",
+             "Name": "A70679_52778_38389_61302",
+             "Activated": "Y",
+             "Properties": {
+              "DocumentId": "{=Document:ID}",
+              "TemplateId": "820",
+              "UseSubscription": "N",
+              "TemplateParameters": [],
+              "Title": "call center audio",
+              "EditorComment": ""
+             },
+             "Children": []
+            },
+            {
+             "Type": "StartWorkflowActivity",
+             "Name": "A22233_52203_97996_16570",
+             "Activated": "Y",
+             "Properties": {
+              "DocumentId": "{=Document:ID}",
+              "TemplateId": "184",
+              "UseSubscription": "N",
+              "TemplateParameters": [],
+              "Title": "Deal_name_phone",
+              "EditorComment": ""
+             },
+             "Children": []
+            },
+            {
+             "Type": "StartWorkflowActivity",
+             "Name": "A83705_54897_2990_30103",
+             "Activated": "Y",
+             "Properties": {
+              "DocumentId": "{=Document:ID}",
+              "TemplateId": "175",
+              "UseSubscription": "N",
+              "TemplateParameters": [],
+              "Title": "ახალზე თვითდინების დასმა",
+              "EditorComment": ""
+             },
+             "Children": []
+            },
+            {
+             "Type": "StartWorkflowActivity",
+             "Name": "A737_51285_37023_70308",
+             "Activated": "Y",
+             "Properties": {
+              "DocumentId": "{=Document:ID}",
+              "TemplateId": "966",
+              "UseSubscription": "N",
+              "TemplateParameters": [],
+              "Title": "add hotDeal on sales deal 966",
+              "EditorComment": ""
+             },
+             "Children": []
+            },
+            {
+             "Type": "StartWorkflowActivity",
+             "Name": "A61346_51736_78635_70266",
+             "Activated": "Y",
+             "Properties": {
+              "DocumentId": "{=Document:ID}",
+              "TemplateId": "189",
+              "UseSubscription": "N",
+              "TemplateParameters": [],
+              "Title": "[SALES] მერჯი 189",
+              "EditorComment": ""
+             },
+             "Children": []
+            },
+            {
+             "Type": "StartWorkflowActivity",
+             "Name": "A51655_94436_10607_50557",
+             "Activated": "Y",
+             "Properties": {
+              "DocumentId": "{=Document:ID}",
+              "TemplateId": "950",
+              "UseSubscription": "N",
+              "TemplateParameters": [],
+              "Title": "contacts country by phone 950",
+              "EditorComment": ""
+             },
+             "Children": []
+            }
+           ]
+          },
+          {
+           "Type": "IfElseBranchActivity",
+           "Name": "A89883_14371_13164_40254",
+           "Activated": "Y",
+           "Properties": {
+            "Title": "Complex Condition Branch"
+           },
+           "Children": [
+            {
+             "Type": "StartWorkflowActivity",
+             "Name": "A31456_649_62265_55833",
+             "Activated": "Y",
+             "Properties": {
+              "DocumentId": "{=Document:ID}",
+              "TemplateId": "255",
+              "UseSubscription": "N",
+              "TemplateParameters": [],
+              "Title": "raport (sales) - ",
+              "EditorComment": ""
+             },
+             "Children": []
+            },
+            {
+             "Type": "StartWorkflowActivity",
+             "Name": "A53588_92504_34364_19602",
+             "Activated": "Y",
+             "Properties": {
+              "DocumentId": "{=Document:ID}",
+              "TemplateId": "406",
+              "UseSubscription": "N",
+              "TemplateParameters": [],
+              "Title": "Source_raport -",
+              "EditorComment": ""
+             },
+             "Children": []
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "Type": "IfElseActivity",
+         "Name": "A58915_36147_56151_3002",
+         "Activated": "Y",
+         "Properties": {
+          "Title": "Condition"
+         },
+         "Children": [
+          {
+           "Type": "IfElseBranchActivity",
+           "Name": "A34686_72393_59816_43482",
+           "Activated": "Y",
+           "Properties": {
+            "Title": "Complex Condition Branch"
+           },
+           "Children": []
+          },
+          {
+           "Type": "IfElseBranchActivity",
+           "Name": "A87058_74242_27327_38651",
+           "Activated": "Y",
+           "Properties": {
+            "Title": "Complex Condition Branch"
+           },
+           "Children": [
+            {
+             "Type": "StartWorkflowActivity",
+             "Name": "A15999_34199_90261_9563",
+             "Activated": "Y",
+             "Properties": {
+              "DocumentId": "{=Document:ID}",
+              "TemplateId": "457",
+              "UseSubscription": "N",
+              "TemplateParameters": [],
+              "Title": "create / Update service deal from sales",
+              "EditorComment": ""
+             },
+             "Children": []
+            },
+            {
+             "Type": "StartWorkflowActivity",
+             "Name": "A61071_88559_640_68132",
+             "Activated": "Y",
+             "Properties": {
+              "DocumentId": "{=Document:ID}",
+              "TemplateId": "149",
+              "UseSubscription": "N",
+              "TemplateParameters": [],
+              "Title": "არსებული კლიენტი",
+              "EditorComment": ""
+             },
+             "Children": []
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A46272_33045_89501_95862",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "967",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "FB Lead Generation",
+          "EditorComment": ""
+         },
+         "Children": []
+        }
+       ]
+      },
+      {
+       "Type": "IfElseBranchActivity",
+       "Name": "A79212_74177_64194_5232",
+       "Activated": "Y",
+       "Properties": {
+        "Title": "Service Leads",
+        "fieldcondition": [
+         [
+          "CATEGORY_ID",
+          "=",
+          "1",
+          "0"
+         ]
+        ],
+        "EditorComment": ""
+       },
+       "Children": [
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A94862_80615_96950_56196",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "546",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "მესაკუთრეების ველების შემოწმება",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A58451_55113_71462_30445",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "317",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "service lead prod update",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A45908_72285_20338_49303",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "841",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "Service Lead Contact Mails",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A41862_39175_95183_71555",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "327",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "[SERVICES] - Service Manager",
+          "EditorComment": ""
+         },
+         "Children": []
+        }
+       ]
+      },
+      {
+       "Type": "IfElseBranchActivity",
+       "Name": "A11011_82437_24450_74229",
+       "Activated": "Y",
+       "Properties": {
+        "Title": "Tickets",
+        "fieldcondition": [
+         [
+          "CATEGORY_ID",
+          "=",
+          "9",
+          "0"
+         ]
+        ],
+        "EditorComment": ""
+       },
+       "Children": [
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A8095_17415_22939_37980",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "258",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "tickets_sms",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A23796_1324_21109_78436",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "526",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "Ticket (Problematic Client)",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A7924_87581_62246_59783",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "373",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "[TICKETS] - ობზერვერების დამატება",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A82575_8103_79294_14000",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "374",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "[TICKETS] - NAME",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A90629_96252_30919_81820",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "404",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "[TICKET] - პასუხისმგებელი/თანაპასუხისმგებელი შემოწმება",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A64183_16574_75006_6820",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "209",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "Tickets - deadline",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A90214_72994_1609_63854",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "840",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "Task Manager New Logic",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A7584_16020_30899_86510",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "425",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "TicketsProdInfoinDeal",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A41475_14260_48024_8864",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "218",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "ticket change status",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A81998_36200_35213_25831",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "1200",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "პროექტ და პორტფოლიო მენეჯერი ობზერვერად",
+          "EditorComment": ""
+         },
+         "Children": []
+        }
+       ]
+      },
+      {
+       "Type": "IfElseBranchActivity",
+       "Name": "A20002_51563_17337_78151",
+       "Activated": "Y",
+       "Properties": {
+        "Title": "Reception",
+        "fieldcondition": [
+         [
+          "CATEGORY_ID",
+          "=",
+          "7",
+          "0"
+         ]
+        ],
+        "EditorComment": ""
+       },
+       "Children": [
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A90850_77746_32361_80483",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "263",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "რეცეფც.შეხვედრების დათვლა",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A85874_44764_83734_26386",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "412",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "tanapas_recep",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A26109_7503_85474_6875",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "413",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "shevida_rec",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A23160_99624_41378_22289",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "182",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "მოვიდა",
+          "EditorComment": ""
+         },
+         "Children": []
+        }
+       ]
+      },
+      {
+       "Type": "IfElseBranchActivity",
+       "Name": "A72382_50157_55300_93559",
+       "Activated": "Y",
+       "Properties": {
+        "Title": "DocFlow",
+        "fieldcondition": [
+         [
+          "CATEGORY_ID",
+          "=",
+          "29",
+          "0"
+         ]
+        ],
+        "EditorComment": ""
+       },
+       "Children": [
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A63455_14689_13969_30300",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "793",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "ECM",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A15800_80640_3478_7684",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "805",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "logFieldsInfoWhileAdd.php",
+          "EditorComment": ""
+         },
+         "Children": []
+        }
+       ]
+      },
+      {
+       "Type": "IfElseBranchActivity",
+       "Name": "A81129_49182_22528_97290",
+       "Activated": "Y",
+       "Properties": {
+        "Title": "საჯარო რეესტრის გადარიცხვები",
+        "fieldcondition": [
+         [
+          "CATEGORY_ID",
+          "=",
+          "34",
+          "0"
+         ]
+        ],
+        "EditorComment": ""
+       },
+       "Children": [
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A68550_71700_29856_65970",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "800",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "რეესტრის გადარიცხვები",
+          "EditorComment": ""
+         },
+         "Children": []
+        }
+       ]
+      },
+      {
+       "Type": "IfElseBranchActivity",
+       "Name": "A28433_69013_10879_8387",
+       "Activated": "Y",
+       "Properties": {
+        "Title": "Call / FB tickets",
+        "fieldcondition": [
+         [
+          "CATEGORY_ID",
+          "=",
+          "26",
+          "0"
+         ]
+        ],
+        "EditorComment": ""
+       },
+       "Children": [
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A73557_11751_83550_45546",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "820",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "call center audio",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A95346_45159_65212_19942",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "209",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "Tickets - deadline",
+          "EditorComment": ""
+         },
+         "Children": []
+        }
+       ]
+      },
+      {
+       "Type": "IfElseBranchActivity",
+       "Name": "A72043_45783_66493_27703",
+       "Activated": "Y",
+       "Properties": {
+        "Title": "Rent Leads",
+        "fieldcondition": [
+         [
+          "CATEGORY_ID",
+          "=",
+          "4",
+          "0"
+         ]
+        ],
+        "EditorComment": ""
+       },
+       "Children": [
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A88226_93248_21908_15778",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "820",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "call center audio",
+          "EditorComment": ""
+         },
+         "Children": []
+        }
+       ]
+      },
+      {
+       "Type": "IfElseBranchActivity",
+       "Name": "A60549_40537_29246_53845",
+       "Activated": "Y",
+       "Properties": {
+        "Title": "Stationary Request",
+        "fieldcondition": [
+         [
+          "CATEGORY_ID",
+          "=",
+          "8",
+          "0"
+         ]
+        ],
+        "EditorComment": ""
+       },
+       "Children": [
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A19616_80095_10938_33881",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "692",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "Request Inventory",
+          "EditorComment": ""
+         },
+         "Children": []
+        }
+       ]
+      },
+      {
+       "Type": "IfElseBranchActivity",
+       "Name": "A8817_92147_73474_21207",
+       "Activated": "Y",
+       "Properties": {
+        "Title": "HR რეკრუტინგი",
+        "fieldcondition": [
+         [
+          "CATEGORY_ID",
+          "=",
+          "5",
+          "0"
+         ]
+        ],
+        "EditorComment": ""
+       },
+       "Children": [
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A2314_36354_10864_96736",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "185",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "klientis dayofa",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A34606_54743_70253_10424",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "96",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "HR რეკრუიტინგი სახელი",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A62572_83678_50444_44587",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "151",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "delete contact",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A61189_47059_84043_80828",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "153",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "ვაკანსიის დასახელება",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A53416_74989_89873_28370",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "182",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "მოვიდა",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A46388_78607_297_96575",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "192",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "hr saxeli",
+          "EditorComment": ""
+         },
+         "Children": []
+        }
+       ]
+      },
+      {
+       "Type": "IfElseBranchActivity",
+       "Name": "A54146_26787_60672_30868",
+       "Activated": "Y",
+       "Properties": {
+        "Title": "Pre Test Upload",
+        "fieldcondition": [
+         [
+          "CATEGORY_ID",
+          "=",
+          "16",
+          "0"
+         ]
+        ],
+        "EditorComment": ""
+       },
+       "Children": [
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A45831_40361_50954_3322",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "457",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "create / Update service deal from sales",
+          "EditorComment": ""
+         },
+         "Children": []
+        }
+       ]
+      },
+      {
+       "Type": "IfElseBranchActivity",
+       "Name": "A64677_31193_20885_91839",
+       "Activated": "Y",
+       "Properties": {
+        "Title": "Hot Leads",
+        "fieldcondition": [
+         [
+          "CATEGORY_ID",
+          "=",
+          "35",
+          "0"
+         ]
+        ],
+        "EditorComment": ""
+       },
+       "Children": [
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A48373_87626_98472_16607",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "158",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "sale Deal Approve",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A79765_69911_73149_483",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "950",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "contacts country by phone 950",
+          "EditorComment": ""
+         },
+         "Children": []
+        }
+       ]
+      },
+      {
+       "Type": "IfElseBranchActivity",
+       "Name": "A44361_17606_79554_97567",
+       "Activated": "Y",
+       "Properties": {
+        "Title": "ვაკანსიის მოთხოვნები",
+        "fieldcondition": [
+         [
+          "CATEGORY_ID",
+          "=",
+          "31",
+          "0"
+         ]
+        ],
+        "EditorComment": ""
+       },
+       "Children": [
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A50670_22845_50330_35415",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "716",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "ვაკანსიის ფორმა",
+          "EditorComment": ""
+         },
+         "Children": []
+        }
+       ]
+      },
+      {
+       "Type": "IfElseBranchActivity",
+       "Name": "A82276_77892_5995_18881",
+       "Activated": "Y",
+       "Properties": {
+        "Title": "International",
+        "fieldcondition": [
+         [
+          "CATEGORY_ID",
+          "=",
+          "40",
+          "0"
+         ]
+        ],
+        "EditorComment": ""
+       },
+       "Children": [
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A1179_58032_80803_70394",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "967",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "FB Lead Generation 967",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A59520_65630_1221_42434",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "189",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "[SALES] მერჯი 189",
+          "EditorComment": ""
+         },
+         "Children": []
+        }
+       ]
+      },
+      {
+       "Type": "IfElseBranchActivity",
+       "Name": "A48153_91926_6496_10627",
+       "Activated": "Y",
+       "Properties": {
+        "Title": "Complex Condition Branch"
+       },
+       "Children": []
+      }
+     ]
+    },
+    {
+     "Type": "IfElseActivity",
+     "Name": "A74977_24421_19684_55944",
+     "Activated": "Y",
+     "Properties": {
+      "Title": "Condition"
+     },
+     "Children": [
+      {
+       "Type": "IfElseBranchActivity",
+       "Name": "A10052_25467_96975_57967",
+       "Activated": "Y",
+       "Properties": {
+        "Title": "Complex Condition Branch"
+       },
+       "Children": []
+      },
+      {
+       "Type": "IfElseBranchActivity",
+       "Name": "A88298_53266_92238_19982",
+       "Activated": "Y",
+       "Properties": {
+        "Title": "Complex Condition Branch"
+       },
+       "Children": [
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A68556_30734_55698_94622",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "750",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "Rent Commercial",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A68256_74739_55917_51819",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "125",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "ნომრის პრეფიქსი125",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A35600_58958_94278_45388",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "488",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "Number_Mask",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A34957_37378_8419_50094",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "174",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "ლიდის შემქმნელის მინიჭება",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A92516_81449_52975_53369",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "230",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "sale ქმნის ლიდს (გადანაწ თარიღი)",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A96549_13339_26018_47461",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "754",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "crm form 30",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A48592_10711_1397_2605",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "187",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "created by change",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "StartWorkflowActivity",
+         "Name": "A4058_2830_12984_4147",
+         "Activated": "Y",
+         "Properties": {
+          "DocumentId": "{=Document:ID}",
+          "TemplateId": "721",
+          "UseSubscription": "N",
+          "TemplateParameters": [],
+          "Title": "ლიდის ტიპის განსაზღვრა",
+          "EditorComment": ""
+         },
+         "Children": []
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

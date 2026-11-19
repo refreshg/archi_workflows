@@ -1,0 +1,1258 @@
+{
+ "ID": "1205",
+ "MODIFIED": "08/20/2026 10:24:48 am",
+ "TEMPLATE": [
+  {
+   "Type": "SequentialWorkflowActivity",
+   "Name": "Template",
+   "Activated": "Y",
+   "Properties": {
+    "Title": "Sequential BP Activity",
+    "Permission": []
+   },
+   "Children": [
+    {
+     "Type": "IfElseActivity",
+     "Name": "A19390_77603_63543_30848",
+     "Activated": "Y",
+     "Properties": {
+      "Title": "Condition"
+     },
+     "Children": [
+      {
+       "Type": "IfElseBranchActivity",
+       "Name": "A45184_24872_9182_95582",
+       "Activated": "Y",
+       "Properties": {
+        "Title": "Complex Condition Branch",
+        "fieldcondition": [
+         [
+          "CATEGORY_ID",
+          "=",
+          "40",
+          "0"
+         ]
+        ],
+        "EditorComment": ""
+       },
+       "Children": [
+        {
+         "Type": "SetVariableActivity",
+         "Name": "A31521_81627_9340_22756",
+         "Activated": "Y",
+         "Properties": {
+          "VariableValue": {
+           "dealID": "{=Document:ID}"
+          },
+          "Title": "Set Variables"
+         },
+         "Children": []
+        },
+        {
+         "Type": "CodeActivity",
+         "Name": "A64334_34424_67710_16402",
+         "Activated": "Y",
+         "Properties": {
+          "ExecuteCode": "\n//bp_227\n\nfunction getCIBlockElementsByFilter_227($arFilter = array())\n{\n    $arElements = array();\n    $arSelect = Array(\"ID\", \"IBLOCK_ID\", \"IBLOCK_SECTION_ID\", \"NAME\", \"DATE_ACTIVE_FROM\", \"PROPERTY_*\");\n    $res = CIBlockElement::GetList(Array(), $arFilter, false, Array(), $arSelect);\n    while ($ob = $res->GetNextElement()) {\n        $arFilds = $ob->GetFields();\n        $arProps = $ob->GetProperties();\n        $arPushs = array();\n        foreach ($arFilds as $key => $arFild) $arPushs[$key] = $arFild;\n        foreach ($arProps as $key => $arProp) $arPushs[$key] = $arProp[\"VALUE\"];\n        array_push($arElements, $arPushs);\n    }\n    return $arElements;\n}\n\nfunction getFields_227($fieldName) {\n    $option=array();\n    $rsUField = CUserFieldEnum::GetList(array(), array(\"USER_FIELD_NAME\" => $fieldName));\n    while($arUField = $rsUField->GetNext())   {\n        $option[$arUField[\"ID\"]]=$arUField[\"VALUE\"];\n    }\n    return $option;\n}",
+          "Title": "PHP Code",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "CodeActivity",
+         "Name": "A59890_41521_4344_67304",
+         "Activated": "Y",
+         "Properties": {
+          "ExecuteCode": "$root=$this->GetRootActivity();\n$dealID=$root->GetVariable(\"dealID\");\n\n\n$arProducts = CCrmDeal::LoadProductRows($dealID);\n\n     $this->SetVariable(\"HASPRODUCT\" , 0);\nif(count($arProducts)){\n     $this->SetVariable(\"HASPRODUCT\" , 1);\n} ",
+          "Title": "PHP Code",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "IfElseActivity",
+         "Name": "A88726_18726_88054_71121",
+         "Activated": "Y",
+         "Properties": {
+          "Title": "Condition"
+         },
+         "Children": [
+          {
+           "Type": "IfElseBranchActivity",
+           "Name": "A69248_98240_39743_78969",
+           "Activated": "Y",
+           "Properties": {
+            "Title": "Complex Condition Branch",
+            "EditorComment": "",
+            "propertyvariablecondition": [
+             [
+              "HASPRODUCT",
+              "=",
+              "1",
+              "0"
+             ]
+            ]
+           },
+           "Children": [
+            {
+             "Type": "LogActivity",
+             "Name": "A69260_42017_92342_27012",
+             "Activated": "Y",
+             "Properties": {
+              "Text": "has product",
+              "SetVariable": "0",
+              "Title": "Log entry",
+              "EditorComment": ""
+             },
+             "Children": []
+            },
+            {
+             "Type": "IfElseActivity",
+             "Name": "A18963_94043_35708_10259",
+             "Activated": "Y",
+             "Properties": {
+              "Title": "Condition"
+             },
+             "Children": [
+              {
+               "Type": "IfElseBranchActivity",
+               "Name": "A91239_17012_81754_89438",
+               "Activated": "Y",
+               "Properties": {
+                "Title": "new\n",
+                "EditorComment": "",
+                "fieldcondition": [
+                 [
+                  "STAGE_ID",
+                  "=",
+                  "C40:NEW",
+                  "0"
+                 ],
+                 [
+                  "STAGE_ID",
+                  "=",
+                  "C40:PREPARATION",
+                  "1"
+                 ],
+                 [
+                  "STAGE_ID",
+                  "=",
+                  "C40:PREPAYMENT_INVOIC",
+                  "1"
+                 ],
+                 [
+                  "STAGE_ID",
+                  "=",
+                  "8",
+                  "1"
+                 ]
+                ]
+               },
+               "Children": [
+                {
+                 "Type": "CodeActivity",
+                 "Name": "A55387_38070_95651_4171",
+                 "Activated": "Y",
+                 "Properties": {
+                  "ExecuteCode": "function getCIBlockElementsByFilter($arFilter = array())\n{\n    $arElements = array();\n    $arSelect = Array(\"ID\", \"IBLOCK_ID\", \"IBLOCK_SECTION_ID\", \"NAME\", \"DATE_ACTIVE_FROM\", \"PROPERTY_*\");\n    $res = CIBlockElement::GetList(Array(), $arFilter, false, Array(), $arSelect);\n    while ($ob = $res->GetNextElement()) {\n        $arFilds = $ob->GetFields();\n        $arProps = $ob->GetProperties();\n        $arPushs = array();\n        foreach ($arFilds as $key => $arFild) $arPushs[$key] = $arFild;\n        foreach ($arProps as $key => $arProp) $arPushs[$key] = $arProp[\"VALUE\"];\n        $price = CPrice::GetBasePrice($arPushs[\"ID\"]);\n//        $floor = getFloor($arPushs[81]);\n        $floor = $arPushs[83];\n        $arPushs[\"PRICE\"] = $price[\"PRICE\"];\n        $arPushs[\"FLOOR\"] = $floor;\n        array_push($arElements, $arPushs);\n    }\n    return $arElements;\n}\n\n\nfunction getDealInfo ($dealID) {\n    $res = CCrmDeal::GetList(array(\"ID\" => \"ASC\"), array(\"ID\" => $dealID), array());\n\n    $resArr = array();\n    if($arDeal = $res->Fetch()){\n        return $arDeal;\n    }\n}\n\nfunction getContactName ($id) {\n    $res = CCrmContact::GetList(array(\"ID\" => \"ASC\"), array(\"ID\" => $id), array());\n\n    if($arContact = $res->Fetch()){\n        // do something\n        return $arContact[\"FULL_NAME\"];\n    }\n}\n\n\nfunction getUserName ($id) {\n    $res = CUser::GetByID($id)->Fetch();\n\n    return $res[\"NAME\"].\" \".$res[\"LAST_NAME\"];\n}\n\nfunction status($status){\n    switch ($status){\n        case \"გაყიდული\" : return 810;\n        case \"თავისუფალი\" : return 811;\n        case \"დაჯავშნილი\" : return 819;\n        case \"Not In Sale\" : return 833;\n        case \"No Price\" : return 1324;\n        default : return 811;\n    }\n}\n\n\nfunction change($book,$bookStr){\n    $bookedBy=explode(\"?\",$book);\n    $bookedByDealID=$bookedBy[1];\n    $deal_id=explode(\"?\",$bookStr);\n    $deal_id=$deal_id[1];\n\n    if($bookedByDealID==$deal_id){\n        return 1;\n    }\n    else{\n        return 0;\n    }\n}\n\n\nfunction perform1 ($element, $deal)\n{\n    $contactID = $deal[\"CONTACT_ID\"];\n    $createdBy = $deal[\"ASSIGNED_BY_ID\"];\n    $bookStr = \"|\" . $contactID . \"=\" . $createdBy . \"?\" . $deal[\"ID\"];\n    $change=change($element[0][439],$bookStr);\n    //-------------------------element update-------------------------//\n\n    $el = new CIBlockElement;\n\n    if($change) {\n        $PROP = array();\n        $element[0][429] = 811;                             //სტატუსი\n//        $element[0][438] = $element[0][438];                //რიგი\n        $element[0][439] = \"\";                              //ჯავშანი\n        $element[0][440] = \"\";                              //buyer name\n        $element[0][441] = \"\";                              //Sales Manager\n\n        $element[0][478] = \"\";                            //ჯავშნის ტიპი\n        $element[0][479] = \"\";                            //ჯავშნის თარიღი\n\n    }\n    else{\n        $element[0][429] = status($element[0][429]);\n\n    }\n\n    $arLoadProductArray = array(\n        \"PROPERTY_VALUES\" => $element[0],\n        \"NAME\" => $element[0][\"NAME\"],\n        \"ACTIVE\" => \"Y\",            // активен\n    );\n    $res = $el->Update($element[0][\"ID\"], $arLoadProductArray);\n    return $change.\" \".$element[0][439].\" \".$bookStr;\n}\n\n\n\n$root=$this->GetRootActivity();\n$dealID=$root->GetVariable(\"dealID\");\n$dealID=intval($dealID);\n\n\n\n$arProduct_keys = array('PRODUCT_NAME','PRICE','QUANTITY','MEASURE_NAME');\n$arProducts = CCrmDeal::LoadProductRows($dealID);\n$element=\"\";\n\nfor($i=0;$i<count($arProducts);$i++) {\n    $arFilter = array(\n        \"IBLOCK_ID\" => 26,\n        \"ID\" => $arProducts[$i][\"PRODUCT_ID\"]\n    );\n\n    $element = getCIBlockElementsByFilter($arFilter);\n    $deal=getDealInfo($dealID);\n    $PROD = perform1($element, $deal);\n}\n\n$this->SetVariable(\"NOTIFICATION\" , json_encode($PROD));",
+                  "Title": "PHP Code",
+                  "EditorComment": ""
+                 },
+                 "Children": []
+                },
+                {
+                 "Type": "LogActivity",
+                 "Name": "A12740_71392_59633_98728",
+                 "Activated": "Y",
+                 "Properties": {
+                  "Text": "new ",
+                  "SetVariable": "0",
+                  "Title": "Log entry",
+                  "EditorComment": ""
+                 },
+                 "Children": []
+                }
+               ]
+              },
+              {
+               "Type": "IfElseBranchActivity",
+               "Name": "A25588_59496_82052_23589",
+               "Activated": "Y",
+               "Properties": {
+                "Title": "reserve",
+                "EditorComment": "",
+                "fieldcondition": [
+                 [
+                  "STAGE_ID",
+                  "=",
+                  "C40:EXECUTING",
+                  "0"
+                 ],
+                 [
+                  "STAGE_ID",
+                  "=",
+                  "C40:5",
+                  "1"
+                 ],
+                 [
+                  "STAGE_ID",
+                  "=",
+                  "C40:6",
+                  "1"
+                 ]
+                ]
+               },
+               "Children": [
+                {
+                 "Type": "SetVariableActivity",
+                 "Name": "A6836_74755_78019_81083",
+                 "Activated": "Y",
+                 "Properties": {
+                  "VariableValue": {
+                   "dealId": "{=Document:ID}"
+                  },
+                  "Title": "Set Variables",
+                  "EditorComment": ""
+                 },
+                 "Children": []
+                },
+                {
+                 "Type": "CodeActivity",
+                 "Name": "A8090_85922_25359_83685",
+                 "Activated": "Y",
+                 "Properties": {
+                  "ExecuteCode": "\n\nfunction getCIBlockElementsByFilter_approve($arFilter = array()) {\n    $arElements = array();\n    $arSelect = Array(\"ID\",\"IBLOCK_ID\",\"NAME\",\"DATE_ACTIVE_FROM\",\"PROPERTY_*\");\n    $res = CIBlockElement::GetList(Array(), $arFilter, false, Array(\"nPageSize\"=>50), $arSelect);\n    while($ob = $res->GetNextElement()) {\n        $arFilds = $ob->GetFields();\n        $arProps = $ob->GetProperties();\n        $arPushs = array();\n        foreach($arFilds as $key => $arFild) $arPushs[$key] = $arFild;\n        foreach($arProps as $key => $arProp) $arPushs[$key] = $arProp[\"VALUE\"];\n        array_push($arElements, $arPushs);\n    }\n    return $arElements;\n}\n\n$rootActivity = $this->GetRootActivity();\n$dealId = $rootActivity->GetVariable(\"dealId\");\n\n$arFilter = array(\n    \"IBLOCK_ID\" => 28,\n    \"PROPERTY_XELSHEKRULEBA\" => $dealId\n);\n$res = getCIBlockElementsByFilter_approve($arFilter);\n\n$has_calculation = \"FALSE\";\nif (sizeof($res) > 0) {\n    foreach ($res as $el) {\n        if ($el[\"XELSHEKRULEBA\"] == $dealId) {\n            $has_calculation = \"TRUE\";\n            break;\n        }\n    }\n}\n$this->SetVariable(\"has_calculation\", $has_calculation);",
+                  "Title": "check_calculation",
+                  "EditorComment": ""
+                 },
+                 "Children": []
+                },
+                {
+                 "Type": "LogActivity",
+                 "Name": "A6579_66859_8487_43248",
+                 "Activated": "Y",
+                 "Properties": {
+                  "Text": "reserv check calculation",
+                  "SetVariable": "0",
+                  "Title": "Log entry",
+                  "EditorComment": ""
+                 },
+                 "Children": []
+                },
+                {
+                 "Type": "IfElseActivity",
+                 "Name": "A66796_2558_36761_80406",
+                 "Activated": "Y",
+                 "Properties": {
+                  "Title": "Condition"
+                 },
+                 "Children": [
+                  {
+                   "Type": "IfElseBranchActivity",
+                   "Name": "A88865_28507_82474_99592",
+                   "Activated": "Y",
+                   "Properties": {
+                    "Title": "has calculation და არ არის რეზერვაცია/პირობების/შეთანხმება",
+                    "EditorComment": "",
+                    "mixedcondition": [
+                     {
+                      "object": "Variable",
+                      "field": "has_calculation",
+                      "operator": "=",
+                      "value": "TRUE",
+                      "joiner": "0"
+                     },
+                     {
+                      "object": "Document",
+                      "field": "STAGE_ID",
+                      "operator": "!=",
+                      "value": "20",
+                      "joiner": "1"
+                     }
+                    ]
+                   },
+                   "Children": [
+                    {
+                     "Type": "CodeActivity",
+                     "Name": "A24389_10419_1279_77416",
+                     "Activated": "Y",
+                     "Properties": {
+                      "ExecuteCode": "function getCIBlockElementsByFilter($arFilter = array())\n{\n    $arElements = array();\n    $arSelect = Array(\"ID\", \"IBLOCK_ID\", \"IBLOCK_SECTION_ID\", \"NAME\", \"DATE_ACTIVE_FROM\", \"PROPERTY_*\");\n    $res = CIBlockElement::GetList(Array(), $arFilter, false, Array(), $arSelect);\n    while ($ob = $res->GetNextElement()) {\n        $arFilds = $ob->GetFields();\n        $arProps = $ob->GetProperties();\n        $arPushs = array();\n        foreach ($arFilds as $key => $arFild) $arPushs[$key] = $arFild;\n        foreach ($arProps as $key => $arProp) $arPushs[$key] = $arProp[\"VALUE\"];\n        $price = CPrice::GetBasePrice($arPushs[\"ID\"]);\n//        $floor = getFloor($arPushs[81]);\n        $floor = $arPushs[83];\n        $arPushs[\"PRICE\"] = $price[\"PRICE\"];\n        $arPushs[\"FLOOR\"] = $floor;\n        array_push($arElements, $arPushs);\n    }\n    return $arElements;\n}\n\n\nfunction getDealInfo ($dealID) {\n    $res = CCrmDeal::GetList(array(\"ID\" => \"ASC\"), array(\"ID\" => $dealID), array());\n\n    $resArr = array();\n    if($arDeal = $res->Fetch()){\n        return $arDeal;\n    }\n}\n\nfunction getContactName ($id) {\n    $res = CCrmContact::GetList(array(\"ID\" => \"ASC\"), array(\"ID\" => $id), array());\n\n    if($arContact = $res->Fetch()){\n        // do something\n        return $arContact[\"FULL_NAME\"];\n    }\n}\n\n\nfunction getUserName ($id) {\n    $res = CUser::GetByID($id)->Fetch();\n\n    return $res[\"NAME\"].\" \".$res[\"LAST_NAME\"];\n}\n\nfunction status($status){\n    switch ($status){\n        case \"გაყიდული\" : return 810;\n        case \"თავისუფალი\" : return 811;\n        case \"დაჯავშნილი\" : return 819;\n        case \"Not In Sale\" : return 833;\n        case \"No Price\" : return 1324;\n        default : return 811;\n    }\n}\n\n\nfunction change($book,$bookStr,$status){\n    $bookedBy=explode(\"?\",$book);\n    $bookedByDealID=$bookedBy[1];\n    $deal_id=explode(\"?\",$bookStr);\n    $deal_id=$deal_id[1];\n\n    if($bookedByDealID==$deal_id  || ($status!=810 && $status!=819 && $status!=810)){\n        return 1;\n    }\n    else{\n        return 0;\n    }\n}\n\n\nfunction perform1 ($element, $deal)\n{\n    $contactID = $deal[\"CONTACT_ID\"];\n    $createdBy = $deal[\"ASSIGNED_BY_ID\"];\n    $bookStatus = $deal[\"UF_1613052920026\"];\n    $bookDate = date(\"m/d/Y\");\n    $bookStr = \"|\" . $contactID . \"=\" . $createdBy . \"?\" . $deal[\"ID\"];\n\n    $change=change($element[0][439],$bookStr,status($element[0][429]));\n\n\n    //-------------------------element update-------------------------//\n\n    $el = new CIBlockElement;\n\n    if($change) {\n        $element[0][429] = 819;                             //სტატუსი\n        $element[0][438] = (stripos($element[0][438], $bookStr) > -1) ? $element[0][438] : $element[0][438] . $bookStr;      //რიგი\n        $element[0][439] = $bookStr;                        //ჯავშანი\n        $element[0][440] = getContactName($contactID).\"|\".$contactID;        //buyer name\n        $element[0][441] = getUserName($createdBy).\"|\".$createdBy;           //Sales Manager\n        $element[0][478] = $bookStatus==\"2083\"?\"ფასიანი\" : \"უფასო\";                                      //ჯავშნის ტიპი\n        $element[0][479] = $bookDate;                                        //ჯავშნის თარიღი\n    }\n\n    else{\n        $element[0][429] = status($element[0][429]);                             //სტატუსი\n    }\n\n    $arLoadProductArray = array(\n        \"PROPERTY_VALUES\" => $element[0],\n        \"NAME\" => $element[0][\"NAME\"],\n        \"ACTIVE\" => \"Y\",            // активен\n    );\n    $res = $el->Update($element[0][\"ID\"], $arLoadProductArray);\n    return $change;\n}\n\n\n\n$root=$this->GetRootActivity();\n$dealID=$root->GetVariable(\"dealID\");\n$dealID=intval($dealID);\n\n\n\n$arProduct_keys = array('PRODUCT_NAME','PRICE','QUANTITY','MEASURE_NAME');\n$arProducts = CCrmDeal::LoadProductRows($dealID);\n$element=\"\";\n$STAGE_CHANGE=2;\nfor($i=0;$i<count($arProducts);$i++) {\n    $arFilter = array(\n        \"IBLOCK_ID\" => 26,\n        \"ID\" => $arProducts[$i][\"PRODUCT_ID\"]\n    );\n\n    $element = getCIBlockElementsByFilter($arFilter);\n    $deal=getDealInfo($dealID);\n    $STAGE_CHANGE = perform1($element, $deal);\n\n}\n\n$this->SetVariable(\"STAGE_CHANGE\" , $STAGE_CHANGE);",
+                      "Title": "PHP Code",
+                      "EditorComment": ""
+                     },
+                     "Children": []
+                    },
+                    {
+                     "Type": "LogActivity",
+                     "Name": "A13740_61252_4970_97814",
+                     "Activated": "Y",
+                     "Properties": {
+                      "Text": "reserv has calculation",
+                      "SetVariable": "0",
+                      "Title": "Log entry",
+                      "EditorComment": ""
+                     },
+                     "Children": []
+                    },
+                    {
+                     "Type": "IfElseActivity",
+                     "Name": "A71930_36189_77916_45470",
+                     "Activated": "Y",
+                     "Properties": {
+                      "Title": "Condition"
+                     },
+                     "Children": [
+                      {
+                       "Type": "IfElseBranchActivity",
+                       "Name": "A85990_65324_41534_30490",
+                       "Activated": "Y",
+                       "Properties": {
+                        "Title": "Complex Condition Branch",
+                        "propertyvariablecondition": [
+                         [
+                          "STAGE_CHANGE",
+                          "=",
+                          "1",
+                          "0"
+                         ]
+                        ]
+                       },
+                       "Children": [
+                        {
+                         "Type": "IMNotifyActivity",
+                         "Name": "A4096_59169_64464_20165",
+                         "Activated": "Y",
+                         "Properties": {
+                          "MessageSite": "ბინა წარმატებით დაიჯავშნა123",
+                          "MessageOut": "",
+                          "MessageType": "4",
+                          "MessageUserFrom": [
+                           "1"
+                          ],
+                          "MessageUserTo": [
+                           "{=Document:ASSIGNED_BY_ID}"
+                          ],
+                          "Title": "ტესტ\n",
+                          "EditorComment": ""
+                         },
+                         "Children": []
+                        }
+                       ]
+                      },
+                      {
+                       "Type": "IfElseBranchActivity",
+                       "Name": "A39853_91770_96028_39355",
+                       "Activated": "Y",
+                       "Properties": {
+                        "Title": "Complex Condition Branch",
+                        "propertyvariablecondition": [
+                         [
+                          "STAGE_CHANGE",
+                          "=",
+                          "2",
+                          "0"
+                         ]
+                        ]
+                       },
+                       "Children": [
+                        {
+                         "Type": "IMNotifyActivity",
+                         "Name": "A83027_67726_80219_16359",
+                         "Activated": "Y",
+                         "Properties": {
+                          "MessageSite": "[b][color=#FF0000]დილზე ბინა არ არის მიბმული 123[/color][/b]\nhttps://crm.archi.ge/crm/deal/details/{=Document:ID}/",
+                          "MessageOut": "",
+                          "MessageType": "4",
+                          "MessageUserFrom": [
+                           "1"
+                          ],
+                          "MessageUserTo": [
+                           "{=Document:ASSIGNED_BY_ID}"
+                          ],
+                          "Title": "User notification",
+                          "EditorComment": ""
+                         },
+                         "Children": []
+                        }
+                       ]
+                      },
+                      {
+                       "Type": "IfElseBranchActivity",
+                       "Name": "A62109_60754_7305_66518",
+                       "Activated": "Y",
+                       "Properties": {
+                        "Title": "Complex Condition Branch"
+                       },
+                       "Children": [
+                        {
+                         "Type": "IMNotifyActivity",
+                         "Name": "A99341_79921_32783_49884",
+                         "Activated": "Y",
+                         "Properties": {
+                          "MessageSite": "[b][color=#FF0000]თქვენს დილზე არსებული ბინა არ არის თავისუფალი[/color][/b]\nhttps://crm.archi.ge/crm/deal/details/{=Document:ID}/",
+                          "MessageOut": "",
+                          "MessageType": "4",
+                          "MessageUserFrom": [
+                           "1"
+                          ],
+                          "MessageUserTo": [
+                           "{=Document:ASSIGNED_BY_ID}"
+                          ],
+                          "Title": "ტესტ\n",
+                          "EditorComment": ""
+                         },
+                         "Children": []
+                        },
+                        {
+                         "Type": "SetFieldActivity",
+                         "Name": "A83819_23099_69795_36803",
+                         "Activated": "Y",
+                         "Properties": {
+                          "FieldValue": {
+                           "STAGE_ID": "C40:NEW"
+                          },
+                          "ModifiedBy": [],
+                          "MergeMultipleFields": "N",
+                          "Title": "Modify Element",
+                          "EditorComment": ""
+                         },
+                         "Children": []
+                        },
+                        {
+                         "Type": "LogActivity",
+                         "Name": "A61065_51680_4556_83126",
+                         "Activated": "Y",
+                         "Properties": {
+                          "Text": "reserv stage change ახალი",
+                          "SetVariable": "0",
+                          "Title": "Log entry",
+                          "EditorComment": ""
+                         },
+                         "Children": []
+                        }
+                       ]
+                      }
+                     ]
+                    }
+                   ]
+                  },
+                  {
+                   "Type": "IfElseBranchActivity",
+                   "Name": "A80361_55991_86182_79298",
+                   "Activated": "Y",
+                   "Properties": {
+                    "Title": "Complex Condition Branch"
+                   },
+                   "Children": [
+                    {
+                     "Type": "SetFieldActivity",
+                     "Name": "A88318_10035_97773_11604",
+                     "Activated": "Y",
+                     "Properties": {
+                      "FieldValue": {
+                       "STAGE_ID": "C40:EXECUTING"
+                      },
+                      "ModifiedBy": [],
+                      "MergeMultipleFields": "N",
+                      "Title": "STAGE: Reservation",
+                      "EditorComment": ""
+                     },
+                     "Children": []
+                    },
+                    {
+                     "Type": "LogActivity",
+                     "Name": "A53055_47624_32560_37463",
+                     "Activated": "Y",
+                     "Properties": {
+                      "Text": "reserv has no calculation",
+                      "SetVariable": "0",
+                      "Title": "Log entry",
+                      "EditorComment": ""
+                     },
+                     "Children": []
+                    },
+                    {
+                     "Type": "IMNotifyActivity",
+                     "Name": "A18444_64079_46388_24862",
+                     "Activated": "Y",
+                     "Properties": {
+                      "MessageSite": "[b][color=red]გთხოვთ, მოამზადოთ გაყიდვის გრაფიკი![/color][/b]",
+                      "MessageOut": "",
+                      "MessageType": "4",
+                      "MessageUserFrom": [
+                       "user_1"
+                      ],
+                      "MessageUserTo": [
+                       "author"
+                      ],
+                      "Title": "გთხოვთ, მოამზადოთ გაყიდვის გრაფიკი",
+                      "EditorComment": ""
+                     },
+                     "Children": []
+                    }
+                   ]
+                  }
+                 ]
+                }
+               ]
+              },
+              {
+               "Type": "IfElseBranchActivity",
+               "Name": "A87442_71553_60044_12941",
+               "Activated": "Y",
+               "Properties": {
+                "Title": "won",
+                "EditorComment": "",
+                "fieldcondition": [
+                 [
+                  "STAGE_ID",
+                  "=",
+                  "C40:WON",
+                  "0"
+                 ]
+                ]
+               },
+               "Children": [
+                {
+                 "Type": "SetVariableActivity",
+                 "Name": "A23513_28191_3520_54846",
+                 "Activated": "Y",
+                 "Properties": {
+                  "VariableValue": {
+                   "dealId": "{=Document:ID}"
+                  },
+                  "Title": "Set Variables",
+                  "EditorComment": ""
+                 },
+                 "Children": []
+                },
+                {
+                 "Type": "CodeActivity",
+                 "Name": "A80702_67805_42792_65195",
+                 "Activated": "Y",
+                 "Properties": {
+                  "ExecuteCode": "\n\nfunction getCIBlockElementsByFilter_approve($arFilter = array()) {\n    $arElements = array();\n    $arSelect = Array(\"ID\",\"IBLOCK_ID\",\"NAME\",\"DATE_ACTIVE_FROM\",\"PROPERTY_*\");\n    $res = CIBlockElement::GetList(Array(), $arFilter, false, Array(\"nPageSize\"=>50), $arSelect);\n    while($ob = $res->GetNextElement()) {\n        $arFilds = $ob->GetFields();\n        $arProps = $ob->GetProperties();\n        $arPushs = array();\n        foreach($arFilds as $key => $arFild) $arPushs[$key] = $arFild;\n        foreach($arProps as $key => $arProp) $arPushs[$key] = $arProp[\"VALUE\"];\n        array_push($arElements, $arPushs);\n    }\n    return $arElements;\n}\n\n$rootActivity = $this->GetRootActivity();\n$dealId = $rootActivity->GetVariable(\"dealId\");\n\n$arFilter = array(\n    \"IBLOCK_ID\" => 28,\n    \"PROPERTY_XELSHEKRULEBA\" => $dealId\n);\n$res = getCIBlockElementsByFilter_approve($arFilter);\n\n$has_calculation = \"FALSE\";\nif (sizeof($res) > 0) {\n    foreach ($res as $el) {\n        if ($el[\"XELSHEKRULEBA\"] == $dealId) {\n            $has_calculation = \"TRUE\";\n            break;\n        }\n    }\n}\n$this->SetVariable(\"has_calculation\", $has_calculation);",
+                  "Title": "check_calculation",
+                  "EditorComment": ""
+                 },
+                 "Children": []
+                },
+                {
+                 "Type": "LogActivity",
+                 "Name": "A64812_96418_31571_90746",
+                 "Activated": "Y",
+                 "Properties": {
+                  "Text": "won check calculation",
+                  "SetVariable": "0",
+                  "Title": "Log entry",
+                  "EditorComment": ""
+                 },
+                 "Children": []
+                },
+                {
+                 "Type": "IfElseActivity",
+                 "Name": "A74009_70184_9472_19579",
+                 "Activated": "Y",
+                 "Properties": {
+                  "Title": "Condition"
+                 },
+                 "Children": [
+                  {
+                   "Type": "IfElseBranchActivity",
+                   "Name": "A70631_75816_30782_16605",
+                   "Activated": "Y",
+                   "Properties": {
+                    "Title": "HAS_CALCULATION",
+                    "EditorComment": "",
+                    "propertyvariablecondition": [
+                     [
+                      "has_calculation",
+                      "=",
+                      "TRUE",
+                      "0"
+                     ]
+                    ]
+                   },
+                   "Children": [
+                    {
+                     "Type": "CodeActivity",
+                     "Name": "A402_27490_35539_60368",
+                     "Activated": "Y",
+                     "Properties": {
+                      "ExecuteCode": "function getCIBlockElementsByFilter($arFilter = array())\n{\n    $arElements = array();\n    $arSelect = Array(\"ID\", \"IBLOCK_ID\", \"IBLOCK_SECTION_ID\", \"NAME\", \"DATE_ACTIVE_FROM\", \"PROPERTY_*\");\n    $res = CIBlockElement::GetList(Array(), $arFilter, false, Array(), $arSelect);\n    while ($ob = $res->GetNextElement()) {\n        $arFilds = $ob->GetFields();\n        $arProps = $ob->GetProperties();\n        $arPushs = array();\n        foreach ($arFilds as $key => $arFild) $arPushs[$key] = $arFild;\n        foreach ($arProps as $key => $arProp) $arPushs[$key] = $arProp[\"VALUE\"];\n        $price = CPrice::GetBasePrice($arPushs[\"ID\"]);\n//        $floor = getFloor($arPushs[81]);\n        $floor = $arPushs[83];\n        $arPushs[\"PRICE\"] = $price[\"PRICE\"];\n        $arPushs[\"FLOOR\"] = $floor;\n        array_push($arElements, $arPushs);\n    }\n    return $arElements;\n}\n\n\nfunction getDealInfo ($dealID) {\n    $res = CCrmDeal::GetList(array(\"ID\" => \"ASC\"), array(\"ID\" => $dealID), array());\n\n    $resArr = array();\n    if($arDeal = $res->Fetch()){\n        return $arDeal;\n    }\n}\n\nfunction getContactName ($id) {\n    $res = CCrmContact::GetList(array(\"ID\" => \"ASC\"), array(\"ID\" => $id), array());\n\n    if($arContact = $res->Fetch()){\n        // do something\n        return $arContact[\"FULL_NAME\"];\n    }\n}\n\n\nfunction getUserName ($id) {\n    $res = CUser::GetByID($id)->Fetch();\n\n    return $res[\"NAME\"].\" \".$res[\"LAST_NAME\"];\n}\n\nfunction status($status){\n    switch ($status){\n        case \"გაყიდული\" : return 810;\n        case \"თავისუფალი\" : return 811;\n        case \"დაჯავშნილი\" : return 819;\n        case \"Not In Sale\" : return 833;\n        case \"No Price\" : return 1324;\n        default : return 811;\n    }\n}\n\n\nfunction change($book,$bookStr,$status){\n    $bookedBy=explode(\"?\",$book);\n    $bookedByDealID=$bookedBy[1];\n    $deal_id=explode(\"?\",$bookStr);\n    $deal_id=$deal_id[1];\n\n    if($bookedByDealID==$deal_id  || ($status!=810 && $status!=819 && $status!=810)){\n        return 1;\n    }\n    else{\n        return 0;\n    }\n}\n\nfunction ProdsDiscountedPrice($string){\n    $arr=explode(\":\",$string);\n    $prices[\"kvmPRICE\"]=str_replace(\"$\",\"\",$arr[0]);\n    $arr=explode(\"|\",$arr[1]);\n    $prices[\"disPrice\"]=$arr[0];\n    $arr=explode(\"=\",$arr[1]);\n    $prices[\"disPercent\"]=str_replace(\"%\",\"\",$arr[0]);\n    $prices[\"discount\"]=str_replace(\"$\",\"\",$arr[1]);\n\n    return $prices;\n}\n\n\nfunction addedProdPrices($addedProdPricesString){\n    $prodsStringArr=explode(\" \",$addedProdPricesString);\n    for($i=0;$i<count($prodsStringArr)-1;$i++){\n        $a=explode(\")\",$prodsStringArr[$i]);\n        $prodsArr[$a[0]]=ProdsDiscountedPrice($a[1]);\n    }\n\n    return $prodsArr;\n}\n\n\nfunction perform1 ($element, $deal,$prodPRICES)\n{\n    $contactID = $deal[\"CONTACT_ID\"];\n    $createdBy = $deal[\"ASSIGNED_BY_ID\"];\n    $bookStr = \"|\" . $contactID . \"=\" . $createdBy . \"?\" . $deal[\"ID\"];\n\n    $change=change($element[0][439],$bookStr,status($element[0][429]));\n\n\n    //-------------------------element update-------------------------//\n\n    $el = new CIBlockElement;\n\n    if($change) {\n        $element[0][429] = 810;                             //სტატუსი\n        $element[0][438] = (stripos($element[0][438], $bookStr) > -1) ? $element[0][438] : $element[0][438] . $bookStr;      //რიგი\n        $element[0][439] = $bookStr;                        //ჯავშანი\n        $element[0][440] = getContactName($contactID).\"|\".$contactID;      //buyer name\n        $element[0][441] = getUserName($createdBy).\"|\".$createdBy;         //Sales Manager\n        $element[0][814] = $prodPRICES[\"disPrice\"];         //ფასდაკლებული ფასი\n        $element[0][815] = $prodPRICES[\"kvmPRICE\"];         //ფასდაკლებული მ2 ფასი\n\n    }\n    else{\n        $element[0][429] = status($element[0][429]);                             //სტატუსი\n\n    }\n\n    $arLoadProductArray = array(\n        \"PROPERTY_VALUES\" => $element[0],\n        \"NAME\" => $element[0][\"NAME\"],\n        \"ACTIVE\" => \"Y\",            // активен\n    );\n    $res = $el->Update($element[0][\"ID\"], $arLoadProductArray);\n    return $change;\n}\n\n\n\n$root=$this->GetRootActivity();\n$dealID=$root->GetVariable(\"dealID\");\n$dealID=intval($dealID);\n\n\n\n$arProduct_keys = array('PRODUCT_NAME','PRICE','QUANTITY','MEASURE_NAME');\n$arProducts = CCrmDeal::LoadProductRows($dealID);\n$element=\"\";\n$STAGE_CHANGE=2;\n$deal=getDealInfo($dealID);\n$discountedPRICES=addedProdPrices($deal[\"UF_CRM_1617998034456\"]);\n$discount=\" \";\nfor($i=0;$i<count($arProducts);$i++) {\n    $arFilter = array(\n        \"IBLOCK_ID\" => 26,\n        \"ID\" => $arProducts[$i][\"PRODUCT_ID\"]\n    );\n    $prodID=$arProducts[$i][\"PRODUCT_ID\"];\n    $element = getCIBlockElementsByFilter($arFilter);\n    $STAGE_CHANGE = perform1($element, $deal,$discountedPRICES[$prodID]);\n    $discount=$discountedPRICES[$prodID][\"kvmPRICE\"];\n}\n$this->SetVariable(\"discount\" , $discount);\n$this->SetVariable(\"STAGE_CHANGE\" , $STAGE_CHANGE);",
+                      "Title": "PHP Code",
+                      "EditorComment": ""
+                     },
+                     "Children": []
+                    },
+                    {
+                     "Type": "LogActivity",
+                     "Name": "A20898_61788_21951_33980",
+                     "Activated": "Y",
+                     "Properties": {
+                      "Text": "won has calculation",
+                      "SetVariable": "0",
+                      "Title": "Log entry",
+                      "EditorComment": ""
+                     },
+                     "Children": []
+                    },
+                    {
+                     "Type": "LogActivity",
+                     "Name": "A45762_86109_17354_72481",
+                     "Activated": "Y",
+                     "Properties": {
+                      "Text": "RES: {=Variable:STAGE_CHANGE > printable}",
+                      "SetVariable": "0",
+                      "Title": "[WON] STAGE CHANGE",
+                      "EditorComment": ""
+                     },
+                     "Children": []
+                    },
+                    {
+                     "Type": "IfElseActivity",
+                     "Name": "A90842_4523_77323_93533",
+                     "Activated": "Y",
+                     "Properties": {
+                      "Title": "Condition"
+                     },
+                     "Children": [
+                      {
+                       "Type": "IfElseBranchActivity",
+                       "Name": "A85528_67373_98992_12801",
+                       "Activated": "Y",
+                       "Properties": {
+                        "Title": "Complex Condition Branch",
+                        "propertyvariablecondition": [
+                         [
+                          "STAGE_CHANGE",
+                          "=",
+                          "1",
+                          "0"
+                         ]
+                        ]
+                       },
+                       "Children": [
+                        {
+                         "Type": "StartWorkflowActivity",
+                         "Name": "A81167_95172_13876_8114",
+                         "Activated": "Y",
+                         "Properties": {
+                          "DocumentId": "{=Document:ID}",
+                          "TemplateId": "437",
+                          "UseSubscription": "Y",
+                          "TemplateParameters": [],
+                          "Title": "Run workflow",
+                          "EditorComment": ""
+                         },
+                         "Children": []
+                        },
+                        {
+                         "Type": "LogActivity",
+                         "Name": "A13018_7367_32433_52589",
+                         "Activated": "Y",
+                         "Properties": {
+                          "Text": "won run workflow update deal darchenili",
+                          "SetVariable": "0",
+                          "Title": "Log entry",
+                          "EditorComment": ""
+                         },
+                         "Children": []
+                        },
+                        {
+                         "Type": "IMNotifyActivity",
+                         "Name": "A26334_63172_43249_86838",
+                         "Activated": "Y",
+                         "Properties": {
+                          "MessageSite": "ბინა წარმატებით გაიყიდა",
+                          "MessageOut": "",
+                          "MessageType": "4",
+                          "MessageUserFrom": [
+                           "1"
+                          ],
+                          "MessageUserTo": [
+                           "{=Document:ASSIGNED_BY_ID}"
+                          ],
+                          "Title": "ტესტ\n",
+                          "EditorComment": ""
+                         },
+                         "Children": []
+                        },
+                        {
+                         "Type": "SetFieldActivity",
+                         "Name": "A38039_26507_4250_47686",
+                         "Activated": "Y",
+                         "Properties": {
+                          "FieldValue": {
+                           "UF_1614704679975": "{=Variable:discount}"
+                          },
+                          "ModifiedBy": [],
+                          "MergeMultipleFields": "N",
+                          "Title": "Edit element",
+                          "EditorComment": ""
+                         },
+                         "Children": []
+                        },
+                        {
+                         "Type": "LogActivity",
+                         "Name": "A57904_57265_42281_41272",
+                         "Activated": "Y",
+                         "Properties": {
+                          "Text": "won edit kvm Pasi",
+                          "SetVariable": "0",
+                          "Title": "Log entry",
+                          "EditorComment": ""
+                         },
+                         "Children": []
+                        },
+                        {
+                         "Type": "IfElseActivity",
+                         "Name": "A34715_63334_5406_89630",
+                         "Activated": "Y",
+                         "Properties": {
+                          "Title": "Condition"
+                         },
+                         "Children": [
+                          {
+                           "Type": "IfElseBranchActivity",
+                           "Name": "A89920_54418_21213_72792",
+                           "Activated": "Y",
+                           "Properties": {
+                            "Title": "Complex Condition Branch",
+                            "EditorComment": "",
+                            "fieldcondition": [
+                             [
+                              "STAGE_ID",
+                              "=",
+                              "WON",
+                              "0"
+                             ],
+                             [
+                              "UF_1628157781716",
+                              "!=",
+                              "651fc3c71c34e9950a6d485cba4c6cfd",
+                              "0"
+                             ]
+                            ]
+                           },
+                           "Children": [
+                            {
+                             "Type": "StartWorkflowActivity",
+                             "Name": "A33195_21148_22164_64482",
+                             "Activated": "Y",
+                             "Properties": {
+                              "DocumentId": "{=Document:ID}",
+                              "TemplateId": "1089",
+                              "UseSubscription": "Y",
+                              "TemplateParameters": [],
+                              "Title": "Run workflow",
+                              "EditorComment": ""
+                             },
+                             "Children": []
+                            },
+                            {
+                             "Type": "LogActivity",
+                             "Name": "A60956_90034_84800_59649",
+                             "Activated": "Y",
+                             "Properties": {
+                              "Text": "won run workflow add deal to info",
+                              "SetVariable": "0",
+                              "Title": "Log entry",
+                              "EditorComment": ""
+                             },
+                             "Children": []
+                            }
+                           ]
+                          },
+                          {
+                           "Type": "IfElseBranchActivity",
+                           "Name": "A56651_51555_14602_48081",
+                           "Activated": "Y",
+                           "Properties": {
+                            "Title": "Complex Condition Branch"
+                           },
+                           "Children": []
+                          },
+                          {
+                           "Type": "IfElseBranchActivity",
+                           "Name": "A21151_74874_45103_64025",
+                           "Activated": "Y",
+                           "Properties": {
+                            "Title": "gadacvla",
+                            "EditorComment": "",
+                            "fieldcondition": [
+                             [
+                              "STAGE_ID",
+                              "=",
+                              "WON",
+                              "0"
+                             ],
+                             [
+                              "UF_1633415836287",
+                              "=",
+                              "1",
+                              "0"
+                             ]
+                            ]
+                           },
+                           "Children": [
+                            {
+                             "Type": "StartWorkflowActivity",
+                             "Name": "A13755_53308_5716_64449",
+                             "Activated": "Y",
+                             "Properties": {
+                              "DocumentId": "{=Document:ID}",
+                              "TemplateId": "1089",
+                              "UseSubscription": "Y",
+                              "TemplateParameters": [],
+                              "Title": "Run workflow",
+                              "EditorComment": ""
+                             },
+                             "Children": []
+                            },
+                            {
+                             "Type": "LogActivity",
+                             "Name": "A65032_14238_24745_87712",
+                             "Activated": "Y",
+                             "Properties": {
+                              "Text": "won run workflow add deal to info 2",
+                              "SetVariable": "0",
+                              "Title": "Log entry",
+                              "EditorComment": ""
+                             },
+                             "Children": []
+                            }
+                           ]
+                          }
+                         ]
+                        }
+                       ]
+                      },
+                      {
+                       "Type": "IfElseBranchActivity",
+                       "Name": "A98618_67129_68735_52346",
+                       "Activated": "Y",
+                       "Properties": {
+                        "Title": "Complex Condition Branch",
+                        "propertyvariablecondition": [
+                         [
+                          "STAGE_CHANGE",
+                          "=",
+                          "2",
+                          "0"
+                         ]
+                        ]
+                       },
+                       "Children": [
+                        {
+                         "Type": "IMNotifyActivity",
+                         "Name": "A65354_53123_88712_98765",
+                         "Activated": "Y",
+                         "Properties": {
+                          "MessageSite": "[b][color=#FF0000]დილზე ბინა არ არის მიბმული[/color][/b]\nhttps://crm.archi.ge/crm/deal/details/{=Document:ID}/",
+                          "MessageOut": "",
+                          "MessageType": "2",
+                          "MessageUserFrom": [
+                           "1"
+                          ],
+                          "MessageUserTo": [
+                           "{=Document:ASSIGNED_BY_ID}"
+                          ],
+                          "Title": "User notification",
+                          "EditorComment": ""
+                         },
+                         "Children": []
+                        }
+                       ]
+                      },
+                      {
+                       "Type": "IfElseBranchActivity",
+                       "Name": "A31935_9402_74904_7015",
+                       "Activated": "Y",
+                       "Properties": {
+                        "Title": "Complex Condition Branch"
+                       },
+                       "Children": [
+                        {
+                         "Type": "IMNotifyActivity",
+                         "Name": "A35974_77187_50065_78014",
+                         "Activated": "Y",
+                         "Properties": {
+                          "MessageSite": "[b][color=#FF0000]თქვენს დილზე არსებული ბინა არ არის თავისუფალი[/color][/b]\nhttps://crm.archi.ge/crm/deal/details/{=Document:ID}/",
+                          "MessageOut": "",
+                          "MessageType": "4",
+                          "MessageUserFrom": [
+                           "1"
+                          ],
+                          "MessageUserTo": [
+                           "{=Document:ASSIGNED_BY_ID}"
+                          ],
+                          "Title": "ტესტ\n",
+                          "EditorComment": ""
+                         },
+                         "Children": []
+                        },
+                        {
+                         "Type": "SetFieldActivity",
+                         "Name": "A88054_93045_69678_65911",
+                         "Activated": "Y",
+                         "Properties": {
+                          "FieldValue": {
+                           "STAGE_ID": "C40:NEW"
+                          },
+                          "ModifiedBy": [],
+                          "MergeMultipleFields": "N",
+                          "Title": "Modify Element",
+                          "EditorComment": ""
+                         },
+                         "Children": []
+                        }
+                       ]
+                      }
+                     ]
+                    }
+                   ]
+                  },
+                  {
+                   "Type": "IfElseBranchActivity",
+                   "Name": "A44149_22921_63770_98322",
+                   "Activated": "Y",
+                   "Properties": {
+                    "Title": "ELSE",
+                    "truecondition": "1",
+                    "EditorComment": ""
+                   },
+                   "Children": [
+                    {
+                     "Type": "SetFieldActivity",
+                     "Name": "A17483_40686_11569_88513",
+                     "Activated": "Y",
+                     "Properties": {
+                      "FieldValue": {
+                       "STAGE_ID": "C40:EXECUTING"
+                      },
+                      "ModifiedBy": [],
+                      "MergeMultipleFields": "N",
+                      "Title": "STAGE: Reservation",
+                      "EditorComment": ""
+                     },
+                     "Children": []
+                    },
+                    {
+                     "Type": "LogActivity",
+                     "Name": "A88311_68079_49168_81301",
+                     "Activated": "Y",
+                     "Properties": {
+                      "Text": "won has no calculation",
+                      "SetVariable": "0",
+                      "Title": "Log entry",
+                      "EditorComment": ""
+                     },
+                     "Children": []
+                    },
+                    {
+                     "Type": "IMNotifyActivity",
+                     "Name": "A93043_46683_59719_5973",
+                     "Activated": "Y",
+                     "Properties": {
+                      "MessageSite": "[b][color=red]გთხოვთ, მოამზადოთ გაყიდვის გრაფიკი![/color][/b]",
+                      "MessageOut": "",
+                      "MessageType": "4",
+                      "MessageUserFrom": [
+                       "user_1"
+                      ],
+                      "MessageUserTo": [
+                       "author"
+                      ],
+                      "Title": "გთხოვთ, მოამზადოთ გაყიდვის გრაფიკი",
+                      "EditorComment": ""
+                     },
+                     "Children": []
+                    }
+                   ]
+                  }
+                 ]
+                }
+               ]
+              },
+              {
+               "Type": "IfElseBranchActivity",
+               "Name": "A89964_202_37098_30591",
+               "Activated": "Y",
+               "Properties": {
+                "Title": "jumk",
+                "truecondition": "1",
+                "EditorComment": ""
+               },
+               "Children": [
+                {
+                 "Type": "CodeActivity",
+                 "Name": "A22521_49041_83103_42050",
+                 "Activated": "Y",
+                 "Properties": {
+                  "ExecuteCode": "function getCIBlockElementsByFilter($arFilter = array())\n{\n    $arElements = array();\n    $arSelect = Array(\"ID\", \"IBLOCK_ID\", \"IBLOCK_SECTION_ID\", \"NAME\", \"DATE_ACTIVE_FROM\", \"PROPERTY_*\");\n    $res = CIBlockElement::GetList(Array(), $arFilter, false, Array(), $arSelect);\n    while ($ob = $res->GetNextElement()) {\n        $arFilds = $ob->GetFields();\n        $arProps = $ob->GetProperties();\n        $arPushs = array();\n        foreach ($arFilds as $key => $arFild) $arPushs[$key] = $arFild;\n        foreach ($arProps as $key => $arProp) $arPushs[$key] = $arProp[\"VALUE\"];\n        $price = CPrice::GetBasePrice($arPushs[\"ID\"]);\n//        $floor = getFloor($arPushs[81]);\n        $floor = $arPushs[83];\n        $arPushs[\"PRICE\"] = $price[\"PRICE\"];\n        $arPushs[\"FLOOR\"] = $floor;\n        array_push($arElements, $arPushs);\n    }\n    return $arElements;\n}\n\n\nfunction getDealInfo ($dealID) {\n    $res = CCrmDeal::GetList(array(\"ID\" => \"ASC\"), array(\"ID\" => $dealID), array());\n\n    $resArr = array();\n    if($arDeal = $res->Fetch()){\n        return $arDeal;\n    }\n}\n\nfunction getContactName ($id) {\n    $res = CCrmContact::GetList(array(\"ID\" => \"ASC\"), array(\"ID\" => $id), array());\n\n    if($arContact = $res->Fetch()){\n        // do something\n        return $arContact[\"FULL_NAME\"];\n    }\n}\n\n\nfunction getUserName ($id) {\n    $res = CUser::GetByID($id)->Fetch();\n\n    return $res[\"NAME\"].\" \".$res[\"LAST_NAME\"];\n}\n\nfunction status($status){\n    switch ($status){\n        case \"გაყიდული\" : return 810;\n        case \"თავისუფალი\" : return 811;\n        case \"დაჯავშნილი\" : return 819;\n        case \"Not In Sale\" : return 833;\n        case \"No Price\" : return 1324;\n        default : return 811;\n    }\n}\n\n\nfunction change($book,$bookStr){\n    $bookedBy=explode(\"?\",$book);\n    $bookedByDealID=$bookedBy[1];\n    $deal_id=explode(\"?\",$bookStr);\n    $deal_id=$deal_id[1];\n\n    if($bookedByDealID==$deal_id ){\n        return 1;\n    }\n    else{\n        return 0;\n    }\n}\n\n\nfunction perform1 ($element, $deal)\n{\n    $contactID = $deal[\"CONTACT_ID\"];\n    $createdBy = $deal[\"ASSIGNED_BY_ID\"];\n    $bookStr = \"|\" . $contactID . \"=\" . $createdBy . \"?\" . $deal[\"ID\"];\n\n    $change=change($element[0][439],$bookStr);\n\n\n    //-------------------------element update-------------------------//\n\n    $el = new CIBlockElement;\n\n    if($change) {\n        $PROP = array();\n        $element[0][429] = 811;                             //სტატუსი\n        $element[0][439] = \"\";                              //ჯავშანი\n        $element[0][440] = \"\";                              //buyer name\n        $element[0][441] = \"\";                              //Sales Manager\n        $element[0][478] = \"\";                            //ჯავშნის ტიპი\n        $element[0][479] = \"\";                            //ჯავშნის თარიღი\n\n    }\n    else{\n        $element[0][429] = status($element[0][429]);    //სტატუსი\n    }\n\n    $arLoadProductArray = array(\n        \"PROPERTY_VALUES\" => $element[0],\n        \"NAME\" => $element[0][\"NAME\"],\n        \"ACTIVE\" => \"Y\",            // активен\n    );\n    $res = $el->Update($element[0][\"ID\"], $arLoadProductArray);\n    return $change.\" \".$element[0][439].\" \".$bookStr;\n}\n\n\n\n$root=$this->GetRootActivity();\n$dealID=$root->GetVariable(\"dealID\");\n$dealID=intval($dealID);\n\n\n\n$arProduct_keys = array('PRODUCT_NAME','PRICE','QUANTITY','MEASURE_NAME');\n$arProducts = CCrmDeal::LoadProductRows($dealID);\n$element=\"\";\n\nfor($i=0;$i<count($arProducts);$i++) {\n    $arFilter = array(\n        \"IBLOCK_ID\" => 26,\n        \"ID\" => $arProducts[$i][\"PRODUCT_ID\"]\n    );\n\n    $element = getCIBlockElementsByFilter($arFilter);\n    $deal=getDealInfo($dealID);\n    $PROD = perform1($element, $deal);\n}\n\n$this->SetVariable(\"NOTIFICATION\" , json_encode($PROD));",
+                  "Title": "PHP Code",
+                  "EditorComment": ""
+                 },
+                 "Children": []
+                },
+                {
+                 "Type": "LogActivity",
+                 "Name": "A59263_46417_13307_84347",
+                 "Activated": "Y",
+                 "Properties": {
+                  "Text": "junk",
+                  "SetVariable": "0",
+                  "Title": "Log entry",
+                  "EditorComment": ""
+                 },
+                 "Children": []
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "Type": "CodeActivity",
+             "Name": "A52642_95790_20717_60866",
+             "Activated": "Y",
+             "Properties": {
+              "ExecuteCode": "\n//bp227\n\n\n\n$root=$this->GetRootActivity();\n$dealID=$root->GetVariable(\"dealID\");\n\n$res = CCrmDeal::GetList(array(\"ID\" => \"ASC\"), array(\"ID\" => $dealID), array());\n\nif($arDeal = $res->Fetch()){\n    $projectsArr = getFields_227(\"UF_CRM_5E1EECDB0571C\");\n    $project = $projectsArr[$arDeal[\"UF_CRM_5E1EECDB0571C\"][0]];\n    if($project){\n        $arFilter = array(\"IBLOCK_ID\" => 111,\"NAME\"=>\"$project\");\n        $elementProject = getCIBlockElementsByFilter_227($arFilter);\n        $elementProjectID = $elementProject[0][\"ID\"];\n    }\n}\n\n$this->SetVariable('elementProjectID', $elementProjectID);\n",
+              "Title": "PHP Code",
+              "EditorComment": ""
+             },
+             "Children": []
+            },
+            {
+             "Type": "StartWorkflowActivity",
+             "Name": "A26275_98200_3719_23178",
+             "Activated": "Y",
+             "Properties": {
+              "DocumentId": "{=Variable:elementProjectID}",
+              "TemplateId": "460",
+              "UseSubscription": "Y",
+              "TemplateParameters": [],
+              "Title": "Run workflow",
+              "EditorComment": ""
+             },
+             "Children": []
+            },
+            {
+             "Type": "LogActivity",
+             "Name": "A94635_12152_43825_80618",
+             "Activated": "Y",
+             "Properties": {
+              "Text": "won run workflow add in product gb",
+              "SetVariable": "0",
+              "Title": "Log entry",
+              "EditorComment": ""
+             },
+             "Children": []
+            },
+            {
+             "Type": "IMNotifyActivity",
+             "Name": "A77500_92893_6397_62030",
+             "Activated": "Y",
+             "Properties": {
+              "MessageSite": "test G {=Variable:elementProjectID}",
+              "MessageOut": "",
+              "MessageType": "4",
+              "MessageUserFrom": [
+               "1"
+              ],
+              "MessageUserTo": [
+               "user_1"
+              ],
+              "Title": "User notification",
+              "EditorComment": ""
+             },
+             "Children": []
+            }
+           ]
+          },
+          {
+           "Type": "IfElseBranchActivity",
+           "Name": "A31291_51216_21364_46200",
+           "Activated": "Y",
+           "Properties": {
+            "Title": "Complex Condition Branch"
+           },
+           "Children": [
+            {
+             "Type": "LogActivity",
+             "Name": "A84957_78250_84883_46137",
+             "Activated": "Y",
+             "Properties": {
+              "Text": "has no product",
+              "SetVariable": "0",
+              "Title": "Log entry",
+              "EditorComment": ""
+             },
+             "Children": []
+            },
+            {
+             "Type": "IfElseActivity",
+             "Name": "A33660_18087_92282_30074",
+             "Activated": "Y",
+             "Properties": {
+              "Title": "Condition"
+             },
+             "Children": [
+              {
+               "Type": "IfElseBranchActivity",
+               "Name": "A939_11786_17549_56368",
+               "Activated": "Y",
+               "Properties": {
+                "Title": "Complex Condition Branch",
+                "fieldcondition": [
+                 [
+                  "STAGE_ID",
+                  "=",
+                  "9",
+                  "0"
+                 ],
+                 [
+                  "STAGE_ID",
+                  "=",
+                  "20",
+                  "1"
+                 ],
+                 [
+                  "STAGE_ID",
+                  "=",
+                  "21",
+                  "1"
+                 ]
+                ],
+                "EditorComment": ""
+               },
+               "Children": [
+                {
+                 "Type": "IMNotifyActivity",
+                 "Name": "A6426_19912_71723_84576",
+                 "Activated": "Y",
+                 "Properties": {
+                  "MessageSite": "[b][color=#FF0000]დილზე ბინა არ არის მიბმული[/color][/b]\nhttps://crm.archi.ge/crm/deal/details/{=Document:ID}/",
+                  "MessageOut": "",
+                  "MessageType": "4",
+                  "MessageUserFrom": [
+                   "1"
+                  ],
+                  "MessageUserTo": [
+                   "{=Document:ASSIGNED_BY_ID}"
+                  ],
+                  "Title": "User notification",
+                  "EditorComment": ""
+                 },
+                 "Children": []
+                }
+               ]
+              },
+              {
+               "Type": "IfElseBranchActivity",
+               "Name": "A13174_85267_72207_48258",
+               "Activated": "Y",
+               "Properties": {
+                "Title": "Complex Condition Branch"
+               },
+               "Children": []
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "Type": "IfElseBranchActivity",
+       "Name": "A57905_28973_37773_72234",
+       "Activated": "Y",
+       "Properties": {
+        "Title": "Complex Condition Branch"
+       },
+       "Children": []
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "VARIABLES": {
+  "dealID": {
+   "Name": "dealID",
+   "Description": "",
+   "Type": "string",
+   "Required": "0",
+   "Multiple": "0",
+   "Options": "",
+   "Default": ""
+  },
+  "NOTIFICATION": {
+   "Name": "NOTIFICATION",
+   "Description": "",
+   "Type": "string",
+   "Required": "0",
+   "Multiple": "0",
+   "Options": "",
+   "Default": ""
+  },
+  "STAGE_CHANGE": {
+   "Name": "STAGE_CHANGE",
+   "Description": "",
+   "Type": "string",
+   "Required": "0",
+   "Multiple": "0",
+   "Options": "",
+   "Default": ""
+  },
+  "discount": {
+   "Name": "discount",
+   "Description": "",
+   "Type": "string",
+   "Required": "0",
+   "Multiple": "0",
+   "Options": "",
+   "Default": ""
+  },
+  "dealId": {
+   "Name": "dealId",
+   "Description": "",
+   "Type": "string",
+   "Required": "0",
+   "Multiple": "0",
+   "Options": "",
+   "Default": ""
+  },
+  "has_calculation": {
+   "Name": "has_calculation",
+   "Description": "",
+   "Type": "string",
+   "Required": "0",
+   "Multiple": "0",
+   "Options": "",
+   "Default": ""
+  },
+  "HASPRODUCT": {
+   "Name": "HASPRODUCT",
+   "Description": "",
+   "Type": "string",
+   "Required": "0",
+   "Multiple": "0",
+   "Options": "",
+   "Default": ""
+  },
+  "elementProjectID": {
+   "Name": "elementProjectID",
+   "Description": "",
+   "Type": "string",
+   "Required": "0",
+   "Multiple": "0",
+   "Options": "",
+   "Default": ""
+  }
+ }
+}

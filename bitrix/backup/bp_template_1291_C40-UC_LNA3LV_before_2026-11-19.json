@@ -1,0 +1,14 @@
+{
+ "MODIFIED": "10/14/2026 03:06:32 pm",
+ "TEMPLATE": [
+  {
+   "Type": "SequentialWorkflowActivity",
+   "Name": "Template",
+   "Properties": {
+    "Title": "Bizproc Automation template"
+   },
+   "Children": []
+  }
+ ],
+ "VARIABLES": []
+}

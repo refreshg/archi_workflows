@@ -1,0 +1,36 @@
+{
+ "ID": "1212",
+ "NAME": "Automation template (C40:UC_UZUO0O)",
+ "MODIFIED": "10/15/2026 12:26:06 pm",
+ "IS_MODIFIED": "Y",
+ "TEMPLATE": [
+  {
+   "Type": "SequentialWorkflowActivity",
+   "Name": "Template",
+   "Activated": "Y",
+   "Properties": {
+    "Title": "Bizproc Automation template"
+   },
+   "Children": [
+    {
+     "Type": "SetFieldActivity",
+     "Name": "A21513_83315_24600_34131",
+     "Activated": "Y",
+     "Properties": {
+      "FieldValue": {
+       "ASSIGNED_BY_ID": "{=User:ID}"
+      },
+      "ModifiedBy": [],
+      "MergeMultipleFields": "N",
+      "Title": "Modify element",
+      "EditorComment": ""
+     },
+     "Children": []
+    }
+   ]
+  }
+ ],
+ "VARIABLES": [],
+ "DOCUMENT_STATUS": "C40:UC_UZUO0O",
+ "AUTO_EXECUTE": "8"
+}
