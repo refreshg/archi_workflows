@@ -1,6 +1,6 @@
-# ARCHI Partner API: projects, units, prices, statuses
+# ARCHI Partner API: Trump Tower, King Tamar, Sioni Lake
 
-Read-only REST API on ARCHI's CRM (Bitrix24, self-hosted). It returns ARCHI's projects and every unit in them (apartments, parking, commercial and office units), with availability, base price and sales status. The data is live: each call reads the current state of the catalogue.
+Read-only REST API on ARCHI's CRM. It covers three projects: **Trump Tower**, **King Tamar** and **Sioni Lake**. For every unit in them (apartments, parking, commercial and office units) it returns availability, base price and sales status. The data is live: each call reads the current state of the catalogue.
 
 ## Access
 
@@ -8,71 +8,59 @@ You get one webhook URL from ARCHI, referred to below as `<WEBHOOK_URL>`. It loo
 
 The webhook can call only the two methods below. Any other CRM method returns `401 insufficient_scope`.
 
-Call a method with `POST <WEBHOOK_URL><method>.json` and a JSON body (`Content-Type: application/json`). Every successful response is HTTP 200 with the payload under `result`.
+Add the method name and `.json` to the base URL. Both `GET` (parameters in the query string) and `POST` (JSON body, `Content-Type: application/json`) work. Every successful response is HTTP 200 with the payload under `result`.
+
+## Projects and IDs
+
+| `project_id` | Project | Blocks (`block_id`: name) |
+|---|---|---|
+| 1 | Trump Tower | 596: Trump Tower |
+| 2 | King Tamar | 570: King Tamar |
+| 3 | Sioni Lake | 571: A, 555: B, 586: C, 582: E |
+
+## 1. `archi.partner.project.list`
+
+Lists the three projects and their blocks, with unit counts per status. It takes no parameters, and the response is cached for up to 5 minutes. The example below is shortened and its counts are illustrative.
 
 ```bash
 curl -s -X POST '<WEBHOOK_URL>archi.partner.project.list.json' -H 'Content-Type: application/json' -d '{}'
 ```
-
-## 1. `archi.partner.project.list`
-
-Lists all projects with their blocks and unit counts per status. It takes no parameters, and the response is cached for up to 5 minutes.
 
 ```json
 {
   "result": {
     "projects": [
       {
-        "id": 2217206,
-        "kind": "complex",
-        "name":     {"ka": "არქი დიღომი", "en": "Archi Dighomi", "ru": "Арки Дигоми"},
-        "city":     {"ka": "თბილისი", "en": "Tbilisi", "ru": "Тбилиси"},
-        "district": {"ka": "დიდი დიღომი", "en": "Didi Digomi", "ru": "Диди Дигоми"},
-        "address":  {"ka": "პეტრე იბერის 16ა", "en": "Petre Iberi Street 16A", "ru": "Петре Ибери 16а"},
-        "status": "completed",
-        "completion_date": null,
-        "show_on_broker_site": null,
-        "units": null,
+        "id": 3,
+        "name": "Sioni Lake",
+        "units": {"total": 382, "available": 273, "reserved": 2, "sold": 98, "not_in_sale": 9, "no_price": 0, "unknown": 0},
         "blocks": [
-          {
-            "id": 2217202, "kind": "building",
-            "name": {"ka": "C", "en": "C", "ru": "C"},
-            "status": "completed",
-            "units": {"total": 103, "available": 7, "reserved": 0, "sold": 96, "not_in_sale": 0, "no_price": 0, "unknown": 0}
-          }
+          {"id": 571, "name": "A", "units": {"total": 75, "available": 38, "reserved": 0, "sold": 37, "not_in_sale": 0, "no_price": 0, "unknown": 0}}
         ]
       }
     ],
-    "count": 45,
+    "count": 3,
     "generated_at": "2026-11-20T12:00:00+04:00"
   }
 }
 ```
 
-| Field | Meaning |
-|---|---|
-| `id` | Project or block ID. Pass it to `archi.partner.unit.list` as `project_id` or `block_id`. |
-| `kind` | `complex`: a project made of blocks, listed in `blocks`. `independent_building`: a single-building project with no blocks; its units hang on the project itself. `building`: a block of a complex. |
-| `status` | `ongoing`, `completed`, `new`, or `null`. |
-| `completion_date` | `YYYY-MM-DD`, or `null` if not set. |
-| `units` | Unit counts by status for this project or block. `null` means no units are published for it; for a complex, the counts are on its blocks. |
-
 ## 2. `archi.partner.unit.list`
 
-Lists units page by page. All parameters are optional.
+Lists units page by page. All parameters are optional. Without `project_id` or `block_id`, it returns the units of all three projects.
 
 | Parameter | Type | Description |
 |---|---|---|
-| `project_id` | int | Units of one project, including all of its blocks. |
-| `block_id` | int | Units of one block. If both are sent, `block_id` is used. |
-| `status` | string or array | `available`, `reserved`, `sold`, `not_in_sale`, `no_price`. For example `"available"` or `["available","reserved"]`. |
+| `project_id` | int | `1`, `2` or `3`: units of one project, including all of its blocks. |
+| `block_id` | int | Units of one block (see the table above). If both are sent, `block_id` is used. |
+| `status` | string or array | `available`, `reserved`, `sold`, `not_in_sale`, `no_price`. For example `"available"` or `["available","reserved"]`. In a GET query string: `status[]=available&status[]=reserved`. |
 | `type` | string | `apartment`, `parking`, `commercial`, `office`, `other`. |
 | `after_id` | int | Cursor: return units with `id` greater than this. Start with `0` (default). |
 | `limit` | int | Page size, 1–500. Default is 200. |
 
 ```bash
 curl -s -X POST '<WEBHOOK_URL>archi.partner.unit.list.json' -H 'Content-Type: application/json' \
-  -d '{"project_id": 2217270, "status": ["available","reserved"], "type": "apartment", "limit": 200}'
+  -d '{"project_id": 2, "status": ["available","reserved"], "type": "apartment", "limit": 200}'
 ```
 
 ```json
@@ -80,24 +68,25 @@ curl -s -X POST '<WEBHOOK_URL>archi.partner.unit.list.json' -H 'Content-Type: ap
   "result": {
     "units": [
       {
-        "id": 1554977,
+        "id": 4506472,
         "number": "2",
-        "project_id": 2217270,
-        "block_id": 2217270,
-        "block_name": "არქი დიალოგი კოხტა",
+        "project_id": 2,
+        "project_name": "King Tamar",
+        "block_id": 570,
+        "block_name": "King Tamar",
         "type": "apartment",
         "type_label": "ბინა",
-        "floor": 1,
-        "rooms": 2,
-        "area_total_m2": 37.2,
-        "area_inside_m2": 36.3,
-        "area_summer_m2": 0.9,
+        "floor": 7,
+        "rooms": 3,
+        "area_total_m2": 152.1,
+        "area_inside_m2": 83.8,
+        "area_summer_m2": 68.3,
         "entrance": null,
         "view": {"ka": null, "en": null, "ru": null},
         "status": "available",
-        "price_usd": 77362.4,
-        "price_per_m2_usd": 2052.8,
-        "updated_at": "2026-11-19T16:56:37+04:00"
+        "price_usd": 436278,
+        "price_per_m2_usd": 3496.33,
+        "updated_at": "2026-07-10T17:17:31+04:00"
       }
     ],
     "count": 1,
@@ -108,7 +97,7 @@ curl -s -X POST '<WEBHOOK_URL>archi.partner.unit.list.json' -H 'Content-Type: ap
 
 - **Prices.** `price_usd` is the base list price in USD. **Sold units never have a price:** `price_usd` and `price_per_m2_usd` are `null` when `status` is `sold`. A price is also `null` when it isn't set in the catalogue.
 - **Empty fields.** Any field may be `null` when ARCHI hasn't filled it in, for example `rooms` or `view` on parking.
-- **`status: "unknown"`.** The unit has no status set in the catalogue. This is a small number of units.
+- **`type_label`.** The unit type as written in ARCHI's catalogue, in Georgian.
 - **`updated_at`.** Informational only. Use full syncs, described below, rather than incremental sync on this field.
 
 ### Paging
@@ -127,7 +116,7 @@ while True:
     after = r["next_after_id"]
 ```
 
-A full sync of all units (about 30,000) takes about 60 calls of 500 and finishes in seconds. A full sync every 15–60 minutes is plenty. Please don't run it more often than every 5 minutes.
+All three projects together have about 1,700 units, which is 4 calls of 500. A full sync every 15–60 minutes is plenty. Please don't run it more often than every 5 minutes.
 
 ## Errors
 
@@ -136,5 +125,5 @@ On an error the HTTP status is not 200, and the body is `{"error": "<CODE>", "er
 | HTTP | `error` | When |
 |---|---|---|
 | 400 | `INVALID_STATUS`, `INVALID_TYPE`, `INVALID_PROJECT_ID`, `INVALID_BLOCK_ID` | A parameter has a wrong value. |
-| 404 | `NOT_FOUND` | Unknown `project_id` or `block_id`. |
+| 404 | `NOT_FOUND` | A `project_id` or `block_id` that isn't in the table above. |
 | 401 | `insufficient_scope` / `invalid_token` | The method isn't part of this API, or the webhook URL is wrong or revoked. |
