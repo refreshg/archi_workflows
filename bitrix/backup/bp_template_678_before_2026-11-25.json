@@ -1,0 +1,571 @@
+{
+ "ID": "678",
+ "NAME": "billing bina Salele Add 678",
+ "MODIFIED": "03/18/2026 04:59:52 pm",
+ "TEMPLATE": [
+  {
+   "Type": "SequentialWorkflowActivity",
+   "Name": "Template",
+   "Activated": "Y",
+   "Properties": {
+    "Title": "Sequential BP Activity",
+    "Permission": []
+   },
+   "Children": [
+    {
+     "Type": "IfElseActivity",
+     "Name": "A10688_68983_81988_87178",
+     "Activated": "Y",
+     "Properties": {
+      "Title": "Condition"
+     },
+     "Children": [
+      {
+       "Type": "IfElseBranchActivity",
+       "Name": "A5425_25907_33805_94326",
+       "Activated": "Y",
+       "Properties": {
+        "Title": "პროექტი არაა არჩეული",
+        "fieldcondition": [
+         [
+          "UF_CRM_5E1EECDB0571C",
+          "empty",
+          [],
+          "0"
+         ]
+        ],
+        "EditorComment": ""
+       },
+       "Children": [
+        {
+         "Type": "IMNotifyActivity",
+         "Name": "A31416_72540_16056_41783",
+         "Activated": "Y",
+         "Properties": {
+          "MessageSite": "[SIZE=21pt][B][COLOR=#ff0000]აღნიშნულ ლიდზე არაა პროექტი არჩეული [/COLOR][/B][/SIZE]",
+          "MessageOut": "",
+          "MessageType": "2",
+          "MessageUserFrom": [
+           "user_1"
+          ],
+          "MessageUserTo": [
+           "{=User:ID}"
+          ],
+          "Title": "User notification",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "LogActivity",
+         "Name": "A12323_83136_36593_51565",
+         "Activated": "Y",
+         "Properties": {
+          "Text": "project empty",
+          "SetVariable": "0",
+          "Title": "Log entry",
+          "EditorComment": ""
+         },
+         "Children": []
+        },
+        {
+         "Type": "MailActivity",
+         "Name": "A4197_10133_91035_24284",
+         "Activated": "Y",
+         "Properties": {
+          "MailSubject": "ბინა ვერ გადავიდა ბილინგში",
+          "MailText": "base64,4YOQ4YOm4YOc4YOY4YOo4YOc4YOj4YOaIOGDmuGDmOGDk+GDluGDlCDhg5Dhg6Dhg5Dhg5Ag4YOe4YOg4YOd4YOU4YOl4YOi4YOYIOGDkOGDoOGDqeGDlOGDo+GDmuGDmC4KaHR0cHM6Ly9jcm0uYXJjaGkuZ2UvY3JtL2RlYWwvZGV0YWlscy97PURvY3VtZW50OklEfS8=",
+          "MailMessageType": "html",
+          "MailCharset": "UTF-8",
+          "DirrectMail": "Y",
+          "MailSite": "s1",
+          "MailSeparator": ",",
+          "File": [
+           ""
+          ],
+          "FileType": "file",
+          "MailUserFrom": "ticket@archi.ge",
+          "MailUserFromArray": [],
+          "MailUserTo": "",
+          "MailUserToArray": [
+           "user_1",
+           "user_4376",
+           "user_4337"
+          ],
+          "MailMessageEncoded": "1",
+          "Title": "Email message  VADA",
+          "EditorComment": ""
+         },
+         "Children": []
+        }
+       ]
+      },
+      {
+       "Type": "IfElseBranchActivity",
+       "Name": "A42648_25845_27261_4287",
+       "Activated": "Y",
+       "Properties": {
+        "Title": "Complex Condition Branch"
+       },
+       "Children": [
+        {
+         "Type": "IfElseActivity",
+         "Name": "A51350_3171_22012_66348",
+         "Activated": "Y",
+         "Properties": {
+          "Title": "Condition"
+         },
+         "Children": [
+          {
+           "Type": "IfElseBranchActivity",
+           "Name": "A50159_6389_15977_37011",
+           "Activated": "Y",
+           "Properties": {
+            "Title": "პროდუქტი არაა არჩეული",
+            "EditorComment": "",
+            "fieldcondition": [
+             [
+              "PRODUCT_IDS",
+              "empty",
+              [],
+              "0"
+             ]
+            ]
+           },
+           "Children": [
+            {
+             "Type": "IMNotifyActivity",
+             "Name": "A67463_59403_88200_91860",
+             "Activated": "Y",
+             "Properties": {
+              "MessageSite": "[SIZE=21pt][B][COLOR=#ff0000]აღნიშნულ ლიდზე არაა პროდუქტი არჩეული [/COLOR][/B][/SIZE]",
+              "MessageOut": "",
+              "MessageType": "2",
+              "MessageUserFrom": [
+               "user_1"
+              ],
+              "MessageUserTo": [
+               "{=User:ID}"
+              ],
+              "Title": "User notification",
+              "EditorComment": ""
+             },
+             "Children": []
+            },
+            {
+             "Type": "LogActivity",
+             "Name": "A66514_85451_57835_52474",
+             "Activated": "Y",
+             "Properties": {
+              "Text": "product empty",
+              "SetVariable": "0",
+              "Title": "Log entry",
+              "EditorComment": ""
+             },
+             "Children": []
+            },
+            {
+             "Type": "MailActivity",
+             "Name": "A98_60072_32693_97887",
+             "Activated": "Y",
+             "Properties": {
+              "MailSubject": "ბინა ვერ გადავიდა ბილინგში",
+              "MailText": "base64,4YOQ4YOm4YOc4YOY4YOo4YOc4YOj4YOaIOGDmuGDmOGDk+GDluGDlCDhg5Dhg6Dhg5Dhg5Ag4YOe4YOg4YOd4YOT4YOj4YOl4YOi4YOYIOGDkOGDoOGDqeGDlOGDo+GDmuGDmApodHRwczovL2NybS5hcmNoaS5nZS9jcm0vZGVhbC9kZXRhaWxzL3s9RG9jdW1lbnQ6SUR9Lw==",
+              "MailMessageType": "html",
+              "MailCharset": "UTF-8",
+              "DirrectMail": "Y",
+              "MailSite": "s1",
+              "MailSeparator": ",",
+              "File": [
+               ""
+              ],
+              "FileType": "file",
+              "MailUserFrom": "ticket@archi.ge",
+              "MailUserFromArray": [],
+              "MailUserTo": "",
+              "MailUserToArray": [
+               "user_1",
+               "user_4376",
+               "user_4337"
+              ],
+              "MailMessageEncoded": "1",
+              "Title": "Email message  VADA",
+              "EditorComment": ""
+             },
+             "Children": []
+            }
+           ]
+          },
+          {
+           "Type": "IfElseBranchActivity",
+           "Name": "A90128_6789_28177_87469",
+           "Activated": "Y",
+           "Properties": {
+            "Title": "Complex Condition Branch"
+           },
+           "Children": [
+            {
+             "Type": "SetVariableActivity",
+             "Name": "A92128_7224_82636_34365",
+             "Activated": "Y",
+             "Properties": {
+              "VariableValue": {
+               "dealId": "{=Document:ID}"
+              },
+              "Title": "Set Variables",
+              "EditorComment": ""
+             },
+             "Children": []
+            },
+            {
+             "Type": "CodeActivity",
+             "Name": "A7081_68289_55668_35598",
+             "Activated": "Y",
+             "Properties": {
+              "ExecuteCode": "// BP - 678_2\n\nif(!function_exists(\"getParentSection_678_3\")) {\n\n    function getParentSection_678_3($sectionId)\n    {\n        $sectionRes = CIBlockSection::GetByID($sectionId);\n\n        if ($section = $sectionRes->GetNext()) {\n            $parentSectionId = $section['IBLOCK_SECTION_ID'];\n\n            if ($parentSectionId) {\n                $parentSectionRes = CIBlockSection::GetByID($parentSectionId);\n                if ($parentSection = $parentSectionRes->GetNext()) {\n                    return $parentSection;\n                } else {\n                    return false;\n                }\n            } else {\n                return false;\n            }\n        } else {\n            return false;\n        }\n\n        return false;\n    }\n}\n\nif(!function_exists(\"getCIBlockElementsByFilter_678_3\")) {\n\n    function getCIBlockElementsByFilter_678_3($arFilter = array())\n    {\n        $arElements = array();\n        $arSelect = array(\"ID\", \"IBLOCK_ID\", \"IBLOCK_SECTION_ID\", \"NAME\", \"DATE_ACTIVE_FROM\", \"PROPERTY_*\");\n        $res = CIBlockElement::GetList(array(\"ID\" => \"DESC\"), $arFilter, false, array(\"nPageSize\" => 1), $arSelect);\n        while ($ob = $res->GetNextElement()) {\n            $arFilds = $ob->GetFields();\n            $arProps = $ob->GetProperties();\n            $arPushs = array();\n            foreach ($arFilds as $key => $arFild) $arPushs[$key] = $arFild;\n            foreach ($arProps as $key => $arProp) $arPushs[$key] = $arProp[\"VALUE\"];\n            array_push($arElements, $arPushs);\n        }\n        return $arElements;\n    }\n}\n\nif(!function_exists(\"checkProduct_678_3\")) {\nfunction checkProduct_678_3($dealID) {\n    $res = CCrmDeal::GetList(array(), array(\"ID\"=>$dealID), array(\"ID\"));\n    if ($deal = $res->Fetch()) {\n        $product = CCrmDeal::LoadProductRows($deal[\"ID\"])[0];\n\n        $arFilter = array(\n            \"IBLOCK_ID\" => 26,\n            \"ID\" => $product[\"PRODUCT_ID\"]\n        );\n\n        $resProd = getCIBlockElementsByFilter_678_3($arFilter)[0];\n\n        $res = getParentSection_678_3($resProd[\"IBLOCK_SECTION_ID\"]);\n\n        if($res[\"ID\"] == 102) {\n            return true;\n        } else {\n            return false;\n        }\n    }\n\n    return false;\n}\n}\n\n$rootActivity = $this->GetRootActivity();\n$dealId = $rootActivity->GetVariable('dealId');\n\n$resCheck = checkProduct_678_3($dealId);\n\nif($resCheck) {\n    $this->SetVariable(\"checkSection\", \"YES\");\n} else {\n    $this->SetVariable(\"checkSection\", \"NO\");\n}\n",
+              "Title": "checkProduct ",
+              "EditorComment": ""
+             },
+             "Children": []
+            },
+            {
+             "Type": "IfElseActivity",
+             "Name": "A12151_65352_62129_14722",
+             "Activated": "Y",
+             "Properties": {
+              "Title": "Condition"
+             },
+             "Children": [
+              {
+               "Type": "IfElseBranchActivity",
+               "Name": "A12652_96170_64357_79062",
+               "Activated": "Y",
+               "Properties": {
+                "Title": "Complex Condition Branch",
+                "propertyvariablecondition": [
+                 [
+                  "checkSection",
+                  "=",
+                  "YES",
+                  "0"
+                 ]
+                ],
+                "EditorComment": ""
+               },
+               "Children": [
+                {
+                 "Type": "CodeActivity",
+                 "Name": "A18332_11002_83471_54843",
+                 "Activated": "Y",
+                 "Properties": {
+                  "ExecuteCode": "\n// BP - 678\n\nif(!function_exists(\"getDealInfo_678_1\")) {\n    function getDealInfo_678_1($dealID)\n    {\n        $res = CCrmDeal::GetList(array(\"ID\" => \"ASC\"), array(\"ID\" => $dealID), array(\"ID\", \"CONTACT_ID\", \"UF_CRM_PROPERTY_PIRADOBA\", \"UF_CRM_1671703591\",\"UF_CRM_1711345771110\",\"UF_CRM_1711345822\"));\n\n        $resArr = array();\n        if ($arDeal = $res->Fetch()) {\n            if($arDeal[\"UF_CRM_1711345771110\"] == 1){\n                $arDeal[\"OWNER_ID\"] = $arDeal[\"UF_CRM_1711345822\"];\n            }else{\n                $arDeal[\"OWNER_ID\"] = $arDeal[\"CONTACT_ID\"];\n            }\n             \n\n            return $arDeal;\n        }\n    }\n}\n\nif(!function_exists(\"getContactInfo_678_1\")) {\n    function getContactInfo_678_1($contactId)\n    {\n        $res = CCrmContact::GetList(array(\"ID\" => \"ASC\"), array(\"ID\" => $contactId), array(\"ID\", \"NAME\", \"LAST_NAME\", \"FULL_NAME\", \"UF_CRM_1585637624945\", \"UF_CRM_1574323084807\"));\n        if ($arContact = $res->Fetch()) {\n            $EMAIL = \\CCrmFieldMulti::GetList(array(), array('ENTITY_ID' => 'CONTACT', 'TYPE_ID' => 'EMAIL', 'VALUE_TYPE' => 'WORK', \"ELEMENT_ID\" => $arContact[\"ID\"]))->Fetch();\n            $PHONE = \\CCrmFieldMulti::GetList(array(), array('ENTITY_ID' => 'CONTACT', 'TYPE_ID' => 'PHONE', 'VALUE_TYPE' => 'WORK', \"ELEMENT_ID\" => $arContact[\"ID\"]))->Fetch();\n            $arContact[\"EMAIL\"] = $EMAIL[\"VALUE\"];\n            $arContact[\"PHONE\"] = $PHONE[\"VALUE\"];\n\n            return $arContact;\n        }\n        return false;\n    }\n}\n\nif(!function_exists(\"WSDL_678_1\")) {\n    function WSDL_678_1($HOST, $POST, $PATCH, $DIR, $arParams)\n    {\n        if (!CModule::IncludeModule('webservice')) return \"Can't importing > CModule::IncludeModule('webservice') \";\n        $client = new CSOAPClient($HOST, $POST);\n        $request = new CSOAPRequest($PATCH, $DIR);\n        $request->addParameter(\"JsonString\", $arParams);\n        $response = $client->send($request);\n        $arResult = $response->Value;\n        return $arResult;\n    }\n}\n\n\n$rootActivity = $this->GetRootActivity();\n$dealId = $rootActivity->GetVariable('dealId');\n\n// $dealId = 327060;\n\n$resClient = \"\";\n\n$dealInfo = getDealInfo_678_1($dealId);\n\nif(!empty($dealInfo[\"OWNER_ID\"])) {\n    $clientId = $dealInfo[\"OWNER_ID\"];\n\n    $contactInfo = getContactInfo_678_1($clientId);\n\n    $personalNumber = $contactInfo[\"UF_CRM_1585637624945\"];\n    if(!$personalNumber && $dealInfo[\"UF_CRM_PROPERTY_PIRADOBA\"]){\n        $personalNumber = $dealInfo[\"UF_CRM_PROPERTY_PIRADOBA\"];\n        $CCrmContact = new CCrmContact(false);\n        $upd = array(\n            \"UF_CRM_1585637624945\" =>$personalNumber, \n        );\n        $result = $CCrmContact->Update($clientId, $upd);\n    }\n\n    if($personalNumber){\n        if(!empty($contactInfo[\"ID\"])) {\n            $arParams = array(\n                \"ClientId\" => $contactInfo[\"ID\"],\n                \"Client\" => $contactInfo[\"FULL_NAME\"],\n                \"TAXNum\" => $personalNumber,\n                \"Phone\" => $contactInfo[\"PHONE\"],\n                \"Email\" => $contactInfo[\"EMAIL\"],\n                \"Address\" => $contactInfo[\"UF_CRM_1574323084807\"][0],\n            );\n        \n            $postJson = json_encode($arParams);\n        \n            $resInfo = WSDL_678_1(\"192.168.1.23:8077\", \"/FMGSoft.asmx\", \"ClientAdd\", \"http://fmgsoft.ge/\", $postJson);\n        \n            $resClient = $resInfo[\"ClientAddResult\"];\n        }\n    }else{\n        $this->SetVariable(\"noPn\", \"noPn\");\n    }\n    \n}\n\n$this->SetVariable(\"resClient\", $resClient);",
+                  "Title": "client Add",
+                  "EditorComment": ""
+                 },
+                 "Children": []
+                },
+                {
+                 "Type": "LogActivity",
+                 "Name": "A72798_52079_8446_53785",
+                 "Activated": "Y",
+                 "Properties": {
+                  "Text": "cilentAdd log : {=Variable:resClient > printable}",
+                  "SetVariable": "0",
+                  "Title": "Log entry",
+                  "EditorComment": ""
+                 },
+                 "Children": []
+                },
+                {
+                 "Type": "IfElseActivity",
+                 "Name": "A61668_35436_48024_10241",
+                 "Activated": "Y",
+                 "Properties": {
+                  "Title": "Condition"
+                 },
+                 "Children": [
+                  {
+                   "Type": "IfElseBranchActivity",
+                   "Name": "A97022_65604_41384_26850",
+                   "Activated": "Y",
+                   "Properties": {
+                    "Title": "პირადობა არაა შევსებული",
+                    "propertyvariablecondition": [
+                     [
+                      "noPn",
+                      "!empty",
+                      "",
+                      "0"
+                     ]
+                    ],
+                    "EditorComment": ""
+                   },
+                   "Children": [
+                    {
+                     "Type": "LogActivity",
+                     "Name": "A25309_88247_11699_86235",
+                     "Activated": "Y",
+                     "Properties": {
+                      "Text": "noPn: {=Variable:noPn > printable}",
+                      "SetVariable": "0",
+                      "Title": "Log entry",
+                      "EditorComment": ""
+                     },
+                     "Children": []
+                    },
+                    {
+                     "Type": "IMNotifyActivity",
+                     "Name": "A98344_79742_85927_52042",
+                     "Activated": "Y",
+                     "Properties": {
+                      "MessageSite": "[SIZE=21pt][B][COLOR=#ff0000]აღნიშნულ ლიდზე არაა შევსებული პირადი ნომერი [/COLOR][/B][/SIZE]",
+                      "MessageOut": "",
+                      "MessageType": "2",
+                      "MessageUserFrom": [
+                       "user_1"
+                      ],
+                      "MessageUserTo": [
+                       "{=User:ID}"
+                      ],
+                      "Title": "User notification",
+                      "EditorComment": ""
+                     },
+                     "Children": []
+                    },
+                    {
+                     "Type": "MailActivity",
+                     "Name": "A95023_1324_88199_27848",
+                     "Activated": "Y",
+                     "Properties": {
+                      "MailSubject": "ბინა ვერ გადავიდა ბილინგში",
+                      "MailText": "base64,4YOQ4YOm4YOc4YOY4YOo4YOc4YOj4YOaIOGDmuGDmOGDk+GDluGDlCDhg5Dhg6Dhg5Dhg5Ag4YOo4YOU4YOV4YOh4YOU4YOR4YOj4YOa4YOYIOGDnuGDmOGDoOGDkOGDk+GDmCDhg5zhg53hg5vhg5Thg6Dhg5gKaHR0cHM6Ly9jcm0uYXJjaGkuZ2UvY3JtL2RlYWwvZGV0YWlscy97PURvY3VtZW50OklEfS8=",
+                      "MailMessageType": "html",
+                      "MailCharset": "UTF-8",
+                      "DirrectMail": "Y",
+                      "MailSite": "s1",
+                      "MailSeparator": ",",
+                      "File": [
+                       ""
+                      ],
+                      "FileType": "file",
+                      "MailUserFrom": "ticket@archi.ge",
+                      "MailUserFromArray": [],
+                      "MailUserTo": "",
+                      "MailUserToArray": [
+                       "user_1",
+                       "user_4376",
+                       "user_4337"
+                      ],
+                      "MailMessageEncoded": "1",
+                      "Title": "Email message  VADA",
+                      "EditorComment": ""
+                     },
+                     "Children": []
+                    }
+                   ]
+                  },
+                  {
+                   "Type": "IfElseBranchActivity",
+                   "Name": "A6544_36291_14891_89577",
+                   "Activated": "Y",
+                   "Properties": {
+                    "Title": "Complex Condition Branch"
+                   },
+                   "Children": [
+                    {
+                     "Type": "CodeActivity",
+                     "Name": "A60602_99702_48103_68869",
+                     "Activated": "Y",
+                     "Properties": {
+                      "ExecuteCode": "\n// BP - 678_2\n\n\nif(!function_exists(\"getDealFields_678_2\")) {\n    function getDealFields_678_2($fieldName)\n    {\n\n        $option = array();\n        $rsUField = CUserFieldEnum::GetList(array(), array(\"USER_FIELD_NAME\" => $fieldName));\n        while ($arUField = $rsUField->GetNext()) {\n            $option[$arUField[\"ID\"]] = $arUField[\"VALUE\"];\n        }\n        return $option;\n\n    }\n}\n\nif(!function_exists(\"getCIBlockElementsByFilter_678_2\")) {\n    function getCIBlockElementsByFilter_678_2($arFilter = array())\n    {\n        $arElements = array();\n        $arSelect = array(\"ID\", \"IBLOCK_ID\", \"IBLOCK_SECTION_ID\", \"NAME\", \"DATE_ACTIVE_FROM\", \"PROPERTY_*\");\n        $res = CIBlockElement::GetList(array(), $arFilter, false, array(\"nPageSize\" => 9999), $arSelect);\n        while ($ob = $res->GetNextElement()) {\n            $arFilds = $ob->GetFields();\n            $arProps = $ob->GetProperties();\n            $arPushs = array();\n            foreach ($arFilds as $key => $arFild) $arPushs[$key] = $arFild;\n            foreach ($arProps as $key => $arProp) $arPushs[$key] = $arProp[\"VALUE\"];\n            array_push($arElements, $arPushs);\n        }\n        return $arElements;\n    }\n}\n\nif(!function_exists(\"getDealInfo_678_2\")) {\n\n    function getDealInfo_678_2($dealID)\n    {\n        $res = CCrmDeal::GetList(array(\"ID\" => \"ASC\"), array(\"ID\" => $dealID), array(\"ID\", \"CONTACT_ID\", \"UF_CRM_1707728900711\", \"UF_CRM_5E1EECDB0571C\",\"UF_CRM_1711345771110\",\"UF_CRM_1711345822\"));\n\n        $resArr = array();\n        if ($arDeal = $res->Fetch()) {\n            $product = CCrmDeal::LoadProductRows($arDeal[\"ID\"]);\n\n            $arFilter = array(\n                \"IBLOCK_ID\" => 26,\n                \"ID\" => $product[0][\"PRODUCT_ID\"]\n            );\n\n            $resProd = getCIBlockElementsByFilter_678_2($arFilter)[0];\n\n            $arDeal[\"PROD_INFO\"] = $resProd;\n\n            if($arDeal[\"UF_CRM_1711345771110\"] == 1){\n                $arDeal[\"OWNER_ID\"] = $arDeal[\"UF_CRM_1711345822\"];\n            }else{\n                $arDeal[\"OWNER_ID\"] = $arDeal[\"CONTACT_ID\"];\n            }\n\n\n\n            return $arDeal;\n        }\n    }\n}\n\nif(!function_exists(\"WSDL_678_2\")) {\n\n    function WSDL_678_2($HOST, $POST, $PATCH, $DIR, $arParams)\n    {\n        if (!CModule::IncludeModule('webservice')) return \"Can't importing > CModule::IncludeModule('webservice') \";\n        $client = new CSOAPClient($HOST, $POST);\n        $request = new CSOAPRequest($PATCH, $DIR);\n        $request->addParameter(\"JsonString\", $arParams);\n        $response = $client->send($request);\n        $arResult = $response->Value;\n        return $arResult;\n    }\n}\n\n$rootActivity = $this->GetRootActivity();\n$dealId = $rootActivity->GetVariable('dealId');\n$resClient = $rootActivity->GetVariable('resClient');\n\n$dealInfo = getDealInfo_678_2($dealId);\n\n\n$billingTanxa = $dealInfo[\"UF_CRM_1707728900711\"];\n\nif(!$billingTanxa){\n    $listids=getDealFields_678_2(\"UF_CRM_5E1EECDB0571C\");\n    $projectName = $listids[$dealInfo['UF_CRM_5E1EECDB0571C'][\"0\"]];\n\n    $projectFilter = array(\"NAME\"=>$projectName,\n                            \"IBLOCK_ID\" =>111,\n    );\n    $projectElem = getCIBlockElementsByFilter_678_2($projectFilter);\n\n    $projectBillingTarif = $projectElem[0][\"BILLING_TARIF\"];\n\n    if(!$projectBillingTarif){\n        $billingTanxa = 0.30;\n    }else{\n        $billingTanxa = $projectBillingTarif;\n    }\n\n\n    $CCrmDeal = new CCrmDeal();\n    $upd = array(\n        \"UF_CRM_1707728900711\" => $billingTanxa,\n\n    );\n    $CCrmDeal->Update($dealId, $upd);\n\n    \n\n}\n\n\n\n$resSale = \"\";\n\nif(!empty($dealInfo[\"ID\"])) {\n    $arParams1 = array(\n        \"FlatId\"        => $dealInfo[\"PROD_INFO\"][\"ID\"],\n        \"Flat\"          => $dealInfo[\"PROD_INFO\"][\"NAME\"],\n        \"FlatTypeId\"    => $dealInfo[\"PROD_INFO\"][\"383\"],\n        \"FlatType\"      => $dealInfo[\"PROD_INFO\"][\"383\"],\n        \"ProjectId\"     => $dealInfo[\"PROD_INFO\"][\"IBLOCK_SECTION_ID\"],\n        \"Project\"       => $dealInfo[\"PROD_INFO\"][\"427\"],\n        \"UbaniId\"       => $dealInfo[\"PROD_INFO\"][\"448\"],\n        \"Ubani\"         => $dealInfo[\"PROD_INFO\"][\"448\"],\n        \"BlockId\"       => $dealInfo[\"PROD_INFO\"][\"IBLOCK_SECTION_ID\"],\n        \"Block\"         => $dealInfo[\"PROD_INFO\"][\"427\"],\n        \"SquireSize\"    => floatval($dealInfo[\"PROD_INFO\"][\"381\"]),\n        \"SquirePrice\"   => floatval($dealInfo[\"PROD_INFO\"][\"382\"]),\n        \"Sadarbazo\"     => \"\",\n        \"SadarbazoId\"   => \"\",\n        \"SartuliId\"     => $dealInfo[\"PROD_INFO\"][\"376\"],\n        \"Sartuli\"       => $dealInfo[\"PROD_INFO\"][\"376\"]\n    );\n\n    $postJson1 = json_encode($arParams1);\n\n    $resInfo1 = WSDL_678_2(\"192.168.1.23:8077\", \"/FMGSoft.asmx\", \"FlatAdd\", \"http://fmgsoft.ge/\", $postJson1);\n    // ---------------\n\n    $currentDate = date(\"Y-m-d\");\n\n    $arParams = array(\n        \"ClientId\"      => $resClient,\n        \"XelshNumb\"     => $dealInfo[\"ID\"],\n        \"ProjectID\"     => $dealInfo[\"PROD_INFO\"][\"IBLOCK_SECTION_ID\"],\n        \"BlockId\"       => $dealInfo[\"PROD_INFO\"][\"IBLOCK_SECTION_ID\"],\n        \"FlatId\"        => $dealInfo[\"PROD_INFO\"][\"ID\"],\n        \"SqrFasi\"       => floatval($billingTanxa),\n        \"DateFrom\"      => $currentDate,\n        \"DateTo\"        => date('Y-m-d', strtotime($currentDate . ' +10 year')),\n        \"ActiveFrom\"    => $currentDate,\n    );\n\n    $postJson = json_encode($arParams);\n\n    $resInfo = WSDL_678_2(\"192.168.1.23:8077\", \"/FMGSoft.asmx\", \"BinaSaleleAdd\", \"http://fmgsoft.ge/\", $postJson);\n    \n    $resSale = $resInfo[\"BinaSaleleAddResult\"];\n}\n\n$this->SetVariable(\"resSale\", $resSale);\n",
+                      "Title": "bina Salele Add",
+                      "EditorComment": ""
+                     },
+                     "Children": []
+                    },
+                    {
+                     "Type": "LogActivity",
+                     "Name": "A3533_93320_4056_69966",
+                     "Activated": "Y",
+                     "Properties": {
+                      "Text": "binaSale log: {=Variable:resSale > printable}",
+                      "SetVariable": "0",
+                      "Title": "Log entry",
+                      "EditorComment": ""
+                     },
+                     "Children": []
+                    },
+                    {
+                     "Type": "CrmTimelineCommentAdd",
+                     "Name": "A7986_7495_9727_30229",
+                     "Activated": "Y",
+                     "Properties": {
+                      "CommentText": "BinaSaleleAddResult: {=Variable:resSale > printable}",
+                      "CommentUser": [
+                       "{=User:ID}"
+                      ],
+                      "Title": "Add comment to item",
+                      "EditorComment": ""
+                     },
+                     "Children": []
+                    },
+                    {
+                     "Type": "IMNotifyActivity",
+                     "Name": "A68246_97381_25696_63852",
+                     "Activated": "Y",
+                     "Properties": {
+                      "MessageSite": "Client Add In Billing System!\nres id: {=Variable:resSale > printable}",
+                      "MessageOut": "",
+                      "MessageType": "2",
+                      "MessageUserFrom": [
+                       "user_1"
+                      ],
+                      "MessageUserTo": [
+                       "{=User:ID}"
+                      ],
+                      "Title": "User notification",
+                      "EditorComment": ""
+                     },
+                     "Children": []
+                    }
+                   ]
+                  }
+                 ]
+                }
+               ]
+              },
+              {
+               "Type": "IfElseBranchActivity",
+               "Name": "A41931_54666_93225_35884",
+               "Activated": "Y",
+               "Properties": {
+                "Title": "აღნიშნულ პროდუქტი არასწორადაა მიმაგრებული",
+                "truecondition": "1",
+                "EditorComment": ""
+               },
+               "Children": [
+                {
+                 "Type": "IMNotifyActivity",
+                 "Name": "A82204_4801_89315_32341",
+                 "Activated": "Y",
+                 "Properties": {
+                  "MessageSite": "[SIZE=21pt][B][COLOR=#ff0000]აღნიშნულ პროდუქტი არასწორადაა მიმაგრებული [/COLOR][/B][/SIZE]",
+                  "MessageOut": "",
+                  "MessageType": "2",
+                  "MessageUserFrom": [
+                   "user_1"
+                  ],
+                  "MessageUserTo": [
+                   "{=User:ID}"
+                  ],
+                  "Title": "User notification",
+                  "EditorComment": ""
+                 },
+                 "Children": []
+                },
+                {
+                 "Type": "LogActivity",
+                 "Name": "A95107_17259_76961_14018",
+                 "Activated": "Y",
+                 "Properties": {
+                  "Text": "არასწორი პროდუქტია",
+                  "SetVariable": "0",
+                  "Title": "Log entry",
+                  "EditorComment": ""
+                 },
+                 "Children": []
+                },
+                {
+                 "Type": "MailActivity",
+                 "Name": "A63082_20226_5982_65904",
+                 "Activated": "Y",
+                 "Properties": {
+                  "MailSubject": "ბინა ვერ გადავიდა ბილინგში",
+                  "MailText": "base64,4YOQ4YOm4YOc4YOY4YOo4YOc4YOj4YOaIOGDnuGDoOGDneGDk+GDo+GDpeGDouGDmCDhg5Dhg6Dhg5Dhg6Hhg6zhg53hg6Dhg5Dhg5Phg5Dhg5Ag4YOb4YOY4YOb4YOQ4YOS4YOg4YOU4YOR4YOj4YOa4YOYCmh0dHBzOi8vY3JtLmFyY2hpLmdlL2NybS9kZWFsL2RldGFpbHMvez1Eb2N1bWVudDpJRH0v",
+                  "MailMessageType": "html",
+                  "MailCharset": "UTF-8",
+                  "DirrectMail": "Y",
+                  "MailSite": "s1",
+                  "MailSeparator": ",",
+                  "File": [
+                   ""
+                  ],
+                  "FileType": "file",
+                  "MailUserFrom": "ticket@archi.ge",
+                  "MailUserFromArray": [],
+                  "MailUserTo": "",
+                  "MailUserToArray": [
+                   "user_1",
+                   "user_4376",
+                   "user_4337"
+                  ],
+                  "MailMessageEncoded": "1",
+                  "Title": "Email message  VADA",
+                  "EditorComment": ""
+                 },
+                 "Children": []
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "VARIABLES": {
+  "dealId": {
+   "Name": "dealId",
+   "Description": "",
+   "Type": "string",
+   "Required": "0",
+   "Multiple": "0",
+   "Options": "",
+   "Default": ""
+  },
+  "resClient": {
+   "Name": "resClient",
+   "Description": "",
+   "Type": "string",
+   "Required": "0",
+   "Multiple": "0",
+   "Options": "",
+   "Default": ""
+  },
+  "resSale": {
+   "Name": "resSale",
+   "Description": "",
+   "Type": "string",
+   "Required": "0",
+   "Multiple": "0",
+   "Options": "",
+   "Default": ""
+  },
+  "noPn": {
+   "Name": "noPn",
+   "Description": "",
+   "Type": "string",
+   "Required": "0",
+   "Multiple": "0",
+   "Options": "",
+   "Default": ""
+  },
+  "checkSection": {
+   "Name": "checkSection",
+   "Description": "",
+   "Type": "string",
+   "Required": "0",
+   "Multiple": "0",
+   "Options": "",
+   "Default": ""
+  }
+ },
+ "PARAMETERS": []
+}
